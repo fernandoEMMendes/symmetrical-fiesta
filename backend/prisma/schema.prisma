@@ -35,3 +35,45 @@ model Produtos {
 
   @@map("produtos")
 }
+
+model Pedidos {
+  id String @id @default(uuid())
+
+  item1 String
+  item2 String?
+  item3 String?
+  item4 String?
+  item5 String?
+
+  atendente   Atendente @relation(fields: [atendenteID], references: [id_atendente])
+  atendenteID String
+
+  mesa   Mesa   @relation(fields: [mesaID], references: [id_mesa])
+  mesaID String
+}
+
+model Atendente {
+  id_atendente String @id @default(uuid())
+  nome         String
+  cpf          String
+  senha        String
+
+  create_at DateTime? @default(now())
+  update_at DateTime? @default(now())
+
+  pedidos Pedidos[]
+
+  @@map("atendentes")
+}
+
+model Mesa {
+  id_mesa     String @id @default(uuid())
+  numero_mesa String
+
+  create_at DateTime? @default(now())
+  update_at DateTime? @default(now())
+
+  pedidos Pedidos[]
+
+  @@map("mesas")
+}
