@@ -50,6 +50,8 @@ model Pedidos {
 
   mesa   Mesa   @relation(fields: [mesaID], references: [id_mesa])
   mesaID String
+
+  @@map("pedidos")
 }
 
 model Atendente {
