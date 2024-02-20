@@ -1,4 +1,4 @@
-import { Request, response, Response } from "express"
+import { Request, Response } from "express"
 import { criarPedidoService } from "../../Services/Pedidos/criarPedidoService"
 
 export class criarPedidoController {

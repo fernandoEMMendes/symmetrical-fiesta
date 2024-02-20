@@ -12,7 +12,7 @@ interface criar {
 
 export class criarPedidoService {
     async execute({ item1, item2, item3, item4, item5, mesaID, atendenteID }: criar) {
-        if (item1 || mesaID || atendenteID) {
+        if (!item1 || !mesaID || !atendenteID) {
             throw new Error("Campos obrigátorios em branco!")
         }
 
