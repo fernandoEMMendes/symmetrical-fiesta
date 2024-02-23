@@ -34,7 +34,10 @@ export class loginUsuarioService {
                 expiresIn: "12h",
             }
         )
-
-        return { message: "Logado com succeso!" }
+        return {
+            id: verificarNome.id,
+            nome: verificarNome.nome,
+            token: token
+        }
     }
 }
