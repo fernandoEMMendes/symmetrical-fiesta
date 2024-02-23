@@ -39,11 +39,16 @@ model Produtos {
 model Pedidos {
   id String @id @default(uuid())
 
-  item1 String
-  item2 String?
-  item3 String?
-  item4 String?
-  item5 String?
+  item1  String
+  quant1 String
+  item2  String?
+  quant2 String?
+  item3  String?
+  quant3 String?
+  item4  String?
+  quant4 String?
+  item5  String?
+  quant5 String?
 
   atendente   Atendente @relation(fields: [atendenteID], references: [id_atendente])
   atendenteID String
