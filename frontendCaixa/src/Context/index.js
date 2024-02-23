@@ -9,7 +9,8 @@ export default function AuthProvider({ children }) {
     async function signIn({ nome, password }) {
         try {
             const resposta = await apiLocal.post("/LoginUsuario", {
-                nome, password
+                nome, 
+                password
             })
             return resposta
         } catch (err) {
@@ -19,8 +20,8 @@ export default function AuthProvider({ children }) {
     }
 
     return (
-        <AuthProvider.Provider value={{ signIn }}>
+        <AuthContext.Provider value={{ signIn }}>
             {children}
-        </AuthProvider.Provider>
+        </AuthContext.Provider>
     )
 }

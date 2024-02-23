@@ -10,7 +10,7 @@ export class lsitarUnicoUsuarioService {
             throw new Error("Campos em brancos não são permitidos!")
         }
 
-        const verificarId = await prismaClient.usuarios.findFirst({
+        const resposta = await prismaClient.usuarios.findFirst({
             where: {
                 id: id
             },
@@ -19,9 +19,6 @@ export class lsitarUnicoUsuarioService {
                 nome: true,
             }
         })
-        if (!verificarId) {
-            throw new Error("Usuário não encontrado!")
-        }
-        return verificarId
+        return resposta
     }
 }

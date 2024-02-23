@@ -11,31 +11,22 @@ export default function Home() {
 
     const { signIn } = useContext(AuthContext)
 
+    const lsToken = localStorage.getItem("@PJI2024")
+    const token = JSON.parse(lsToken)
+
     useEffect(() => {
-        const lsToken = localStorage.getItem("@PJI2024")
-        const token = JSON.parse(lsToken)
 
-        if (!token) {
-            navigation("/")
-            return
-        } else {
-            async function verificarLSToken() {
-                const resposta = await apiLocal.get("/ListarUnicoUsuario", {
-                    headers: {
-                        Authorization: "Bearer " + `${token}`
-                    }
-                })
+        async function verificarLSToken() {
+            const resposta = await apiLocal.get("/ListarUnicoUsuario")
 
-                if (resposta.data.dados) {
-                    navigation("/")
-                    return
-                } else if (resposta.data.id) {
-                    navigation("/Caixa")
-                }
+            if (resposta.data.dados) {
+                navigation("/")
+                return
             }
-            verificarLSToken()
         }
-    })
+        verificarLSToken()
+    }, [token])
+
 
     async function handleLogin(e) {
         e.preventDefault(e)
