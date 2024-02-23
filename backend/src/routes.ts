@@ -15,7 +15,7 @@ import { atualizarProdutoController } from "./Controllers/Produtos/atualizarProd
 
 //Pedidos
 import { criarPedidoController } from "./Controllers/Pedidos/criarPedidoController"
-import { listarPedidoController } from "./Controllers/Pedidos/listarPedidoController"
+import { listarPedidoController } from './Controllers/Pedidos/listarPedidoController'
 
 //Usuários
 import { criarUsuarioController } from "./Controllers/Usuarios/criarUsuarioController"
@@ -55,17 +55,10 @@ rotas.post("/LoginUsuario", new loginUsuarioController().handle)
 //ATENDENTES
 rotas.post("/CriarAtendentes", new CriarAtendentesController().handle);
 rotas.post("/LoginAtendentes", new AutenticarAtendenteController().handle);
-rotas.get(
-    "/ListarAtendenteToken",
-    isAuth,
-    new ListarAtendenteTokenController().handle
-);
+rotas.get("/ListarAtendenteToken", isAuth, new ListarAtendenteTokenController().handle);
 
 //MESAS
 rotas.post("/CriarMesas", new CriarMesasController().handle);
 rotas.get("/ListarMesas", isAuth, new ListarMesasController().handle);
-rotas.get(
-    "/ListarMesaUnica/:id_mesa",
-    isAuth,
-    new ListarMesaUnicaController().handle
+rotas.get("/ListarMesaUnica/:id_mesa", isAuth, new ListarMesaUnicaController().handle
 );

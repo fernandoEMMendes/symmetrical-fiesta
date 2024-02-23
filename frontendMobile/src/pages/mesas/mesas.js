@@ -70,8 +70,8 @@ export default function Mesas() {
     navigation.navigate("inicial");
   }
   //Ir para produtos
-  function irProdutos() {
-    navigation.navigate("produtos")
+  function irMesaID() {
+    navigation.navigate("mesa_id")
   }
 
   return (
@@ -84,7 +84,7 @@ export default function Mesas() {
             <View>
               {lista.length !== 0 && (
                 <>
-                  <TouchableOpacity onPress={irProdutos}>
+                  <TouchableOpacity onPress={irMesaID}>
                     <Image
                       source={require('../../../images/mesa.png')}
                       style={styles.mesa}
