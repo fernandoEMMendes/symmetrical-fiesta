@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Inicial from "../inicial/inicial";
 import Mesas from "../mesas/mesas";
-import IDmesas from '../mesas/mesa_id'
+import IDmesas from "../mesas/mesa_id";
 import Produtos from "../produtos/produtos";
 
 const Stack = createNativeStackNavigator();
@@ -29,9 +29,9 @@ export default function Rotas() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-      name='mesa_id'
-      component={IDmesas}
-      options={{ headerShown: false }}
+        name="mesa_id"
+        component={IDmesas}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

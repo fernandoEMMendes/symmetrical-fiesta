@@ -14,7 +14,6 @@ import {
 import { useState } from "react";
 
 export default function Inicial() {
-
   const navigation = useNavigation();
   const [nome, setNome] = useState("");
   const [password, setPassword] = useState("");
@@ -30,7 +29,10 @@ export default function Inicial() {
         nome,
         password,
       });
-      await AsyncStorage.setItem("@id_atendente",JSON.stringify(resposta.data.id));
+      await AsyncStorage.setItem(
+        "@id_atendente",
+        JSON.stringify(resposta.data.id)
+      );
       await AsyncStorage.setItem("@nome", JSON.stringify(resposta.data.nome));
       await AsyncStorage.setItem("@token", JSON.stringify(resposta.data.token));
 
@@ -39,7 +41,7 @@ export default function Inicial() {
       //APÓS O LOGIN, O NOME E A SENHA FICAM EM BRANCO
       setNome("");
       setPassword("");
-    } catch (error) {
+    } catch (err) {
       alert("Usuário / Senha incorretos");
     }
     Keyboard.dismiss();
@@ -106,7 +108,7 @@ const styles = StyleSheet.create({
     padding: 5,
     color: "black",
     textAlign: "center",
-    fontSize: 18
+    fontSize: 18,
   },
   botaoEntrar: {
     marginTop: 20,

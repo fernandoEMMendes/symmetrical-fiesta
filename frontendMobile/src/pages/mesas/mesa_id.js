@@ -1,61 +1,67 @@
 import {
-    SafeAreaView,
-    View,
-    Text,
-    StyleSheet,
-    StatusBar,
-    TouchableOpacity,
-    TextInput,
-    Image,
-} from "react-native"
+  SafeAreaView,
+  View,
+  Text,
+  StyleSheet,
+  StatusBar,
+  TouchableOpacity,
+  TextInput,
+  Image,
+} from "react-native";
 
-import { useEffect, useState } from "react"
-import { useNavigation } from '@react-navigation/native'
+import { useEffect, useState } from "react";
+import { useNavigation, route } from "@react-navigation/native";
 
-import apiLocal from "../../api/apiLocal"
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import apiLocal from "../../api/apiLocal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function IDmesas() {
+export default function IDmesas({ navigation, route }) {
+  // const navigation = useNavigation();
+  // const [mesa, setMesa] = useState([""]);
 
-    const id = '1b7a3108-161b-4729-a24d-7a3cf63a6820'
-    const navigation = useNavigation()
-    const [mesa, setMesa] = useState([''])
-    const [listarUnicaMesa, setListarUnicaMesa] = useState('')
+  // useEffect(() => {
+  //   async function listarMesaUnica() {
+  //     const iToken = await AsyncStorage.getItem("@token");
+  //     const token = JSON.parse(iToken);
 
-    useEffect(() => {
-        async function listarMesaUnica() {
+  //     const resposta = await apiLocal.get(`/ListarMesaUnica/${id}`, {
+  //       headers: {
+  //         Authorization: "Bearer " + `${token}`,
+  //       },
+  //     });
+  //     setMesa(resposta.data);
 
-            const iToken = await AsyncStorage.getItem('@token')
-            const token = JSON.parse(iToken)
+  //     if (!resposta.data) {
+  //       navigation.navigate("inicial");
+  //       return;
+  //     }
+  //   }
+  //   listarMesaUnica();
+  // }, []);
 
-            const resposta = await apiLocal.get(`/ListarMesaUnica/${id}`, {
-                headers: {
-                    Authorization: 'Bearer ' + `${token}`
-                }
-            })
-            setMesa(resposta.data)
-            if (!resposta.data) {
-                navigation.navigate('inicial')
-                return
-            }
-        }
-        listarMesaUnica()
-    }, [mesa])
+  function voltarTela() {
+    navigation.navigate("mesas");
+  }
 
-    return (
-        <SafeAreaView>
-            <View>
-                <Text>Visualizando ID da mesa</Text>
-            </View>
-        </SafeAreaView>
-    )
+  return (
+    <SafeAreaView>
+      <View>
+        <Text>Esta é a mesa {route.params.mesaId}</Text>
+      </View>
+      <View>
+        <TouchableOpacity>
+          <Text onPress={voltarTela}>Voltar</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "beige"
-    }
-})
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "beige",
+  },
+});

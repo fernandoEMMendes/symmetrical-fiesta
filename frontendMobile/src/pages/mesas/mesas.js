@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiLocal from "../../api/apiLocal";
 import {
@@ -13,14 +13,13 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 
-console.disableYellowBox = true
+console.disableYellowBox = true;
 
 export default function Mesas() {
-
   const navigation = useNavigation();
 
   const [mesa, setMesa] = useState([""]);
-  const [id, setId] = useState('');
+  const [id, setId] = useState("");
   const [respNome, setRespNome] = useState("");
   const [respToken, setRespToken] = useState("");
 
@@ -40,21 +39,20 @@ export default function Mesas() {
     }
 
     async function loadID() {
-      const iID = await AsyncStorage.getItem("@id_atendente")
-      const id = JSON.parse(iID)
+      const iID = await AsyncStorage.getItem("@id_atendente");
+      const id = JSON.parse(iID);
     }
 
     async function verificaToken() {
+      const iToken = await AsyncStorage.getItem("@token");
+      const token = JSON.parse(iToken);
 
-      const iToken = await AsyncStorage.getItem("@token")
-      const token = JSON.parse(iToken)
-
-      const resposta = await apiLocal.get('/ListarMesas', {
+      const resposta = await apiLocal.get("/ListarMesas", {
         headers: {
           Authorization: "Bearer " + `${token}`,
         },
       });
-      setMesa(resposta.data)
+      setMesa(resposta.data);
       if (!resposta.data) {
         navigation.navigate("inicial");
         return;
@@ -64,14 +62,12 @@ export default function Mesas() {
   }, [mesa]);
   //MOSTRAR MESAS
 
+  function irMesa() {}
+
   // FAZER LOGOFF
   function Logoff() {
     AsyncStorage.removeItem("@token");
     navigation.navigate("inicial");
-  }
-  //Ir para produtos
-  function irMesaID() {
-    navigation.navigate("mesa_id")
   }
 
   return (
@@ -84,9 +80,15 @@ export default function Mesas() {
             <View>
               {lista.length !== 0 && (
                 <>
-                  <TouchableOpacity onPress={irMesaID}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("mesa_id", {
+                        mesaId: `${lista.numero_mesa}`,
+                      })
+                    }
+                  >
                     <Image
-                      source={require('../../../images/mesa.png')}
+                      source={require("../../../images/mesa.png")}
                       style={styles.mesa}
                     />
                     <Text style={styles.textoMesa}>{lista.numero_mesa}</Text>
@@ -94,7 +96,7 @@ export default function Mesas() {
                 </>
               )}
             </View>
-          )
+          );
         })}
       </View>
 
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: 20
+    marginLeft: 20,
   },
   footer: {
     backgroundColor: "red",
