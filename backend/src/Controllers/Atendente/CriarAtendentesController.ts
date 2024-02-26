@@ -1,15 +1,15 @@
 import { Request, Response } from "express";
-import { CriarAtendentesServices } from "../../Services/Atendente/criarAtendentesServices";
+import { CriarAtendentesServices } from "../../Services/Atendente/CriarAtendentesServices";
 
 class CriarAtendentesController {
   async handle(req: Request, res: Response) {
-    const { nome, cpf, senha } = req.body;
+    const { nome, cpf, password } = req.body;
 
     const criarAtendentesServices = new CriarAtendentesServices();
     const resposta = await criarAtendentesServices.execute({
       nome,
       cpf,
-      senha
+      password
     });
     return res.json(resposta);
   }
