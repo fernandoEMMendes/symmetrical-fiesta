@@ -60,9 +60,6 @@ export default function Mesas() {
     }
     verificaToken();
   }, [mesa]);
-  //MOSTRAR MESAS
-
-  function irMesa() {}
 
   // FAZER LOGOFF
   function Logoff() {
@@ -74,7 +71,7 @@ export default function Mesas() {
     <View style={styles.container}>
       <StatusBar style="auto" />
 
-      <View style={styles.mesaContainer}>
+      <View style={styles.mesaContainer2}>
         {mesa.map((lista) => {
           return (
             <View>
@@ -100,7 +97,7 @@ export default function Mesas() {
         })}
       </View>
 
-      <TouchableOpacity onPress={Logoff} style={styles.footer}>
+      <TouchableOpacity onLongPress={Logoff} style={styles.footer}>
         <Text style={styles.footerTexto}>ENCERRAR EXPEDIENTE</Text>
       </TouchableOpacity>
     </View>
@@ -125,7 +122,7 @@ const styles = StyleSheet.create({
     flex: 2,
     alignItems: "center",
     flexDirection: "row",
-    gap: 55,
+    gap: 30,
     marginTop: -500,
   },
   mesa: {
