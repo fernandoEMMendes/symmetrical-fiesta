@@ -9,36 +9,13 @@ import {
   Image,
 } from "react-native";
 
-//import { useEffect, useState } from "react";
-//import { useNavigation, route } from "@react-navigation/native";
+import { useEffect, useState } from "react";
+import { useNavigation, route } from "@react-navigation/native";
 
-//import apiLocal from "../../api/apiLocal";
-//import AsyncStorage from "@react-native-async-storage/async-storage";
+import apiLocal from "../../api/apiLocal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function IDmesas({ navigation, route }) {
-  // const navigation = useNavigation();
-  // const [mesa, setMesa] = useState([""]);
-
-  // useEffect(() => {
-  //   async function listarMesaUnica() {
-  //     const iToken = await AsyncStorage.getItem("@token");
-  //     const token = JSON.parse(iToken);
-
-  //     const resposta = await apiLocal.get(`/ListarMesaUnica/${id}`, {
-  //       headers: {
-  //         Authorization: "Bearer " + `${token}`,
-  //       },
-  //     });
-  //     setMesa(resposta.data);
-
-  //     if (!resposta.data) {
-  //       navigation.navigate("inicial");
-  //       return;
-  //     }
-  //   }
-  //   listarMesaUnica();
-  // }, []);
-
   function voltarTela() {
     navigation.navigate("mesas");
   }
@@ -49,7 +26,13 @@ export default function IDmesas({ navigation, route }) {
         <Text style={styles.titulo}>MESA {route.params.mesaId}</Text>
       </View>
       <View>
-        <Text>Esta é a mesa {route.params.mesaId}</Text>
+        <TextInput
+          style={styles.buscar}
+          inputMode="search"
+          placeholder="Buscar produto..."
+          placeholderTextColor="black"
+          selectionColor="black"
+        />
       </View>
       <View>
         <TouchableOpacity>
