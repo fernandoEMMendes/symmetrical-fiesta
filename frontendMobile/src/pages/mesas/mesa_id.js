@@ -16,6 +16,7 @@ import apiLocal from "../../api/apiLocal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function IDmesas({ navigation, route }) {
+
   function voltarTela() {
     navigation.navigate("mesas");
   }
@@ -35,8 +36,8 @@ export default function IDmesas({ navigation, route }) {
         />
       </View>
       <View>
-        <TouchableOpacity>
-          <Text onPress={voltarTela}>Voltar</Text>
+        <TouchableOpacity style={styles.botaoVoltar}>
+          <Text style={styles.textoVoltar} onPress={voltarTela}>Voltar</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -51,12 +52,12 @@ const styles = StyleSheet.create({
     backgroundColor: "beige",
   },
   titulo: {
-    marginTop: -340,
+    marginTop: -200,
     fontSize: 30,
     fontWeight: "bold",
   },
   buscar: {
-    marginTop: -280,
+    marginTop: -100,
     borderColor: "black",
     borderWidth: 1,
     borderRadius: 10,
@@ -66,4 +67,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
+  botaoVoltar: {
+    borderColor: 'black',
+    backgroundColor: 'red',
+    borderRadius: 8,
+    borderWidth: 2,
+    padding: 10,
+    width: 120,
+    marginTop: 20,
+
+  },
+  textoVoltar: {
+    fontWeight: "bold",
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 18,
+    paddingVertical: 2
+  }
 });

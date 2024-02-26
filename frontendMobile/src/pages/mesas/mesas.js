@@ -69,8 +69,7 @@ export default function Mesas() {
 
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
-
+      
       <View style={styles.mesaContainer2}>
         {mesa.map((lista) => {
           return (
@@ -119,15 +118,18 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   mesaContainer2: {
-    flex: 2,
-    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
     flexDirection: "row",
-    gap: 30,
-    marginTop: -500,
+    flexWrap: "wrap",
+    //gap: 30,
+    //marginTop: -500,
+    marginLeft: 50
   },
   mesa: {
     width: 50,
     height: 50,
+    marginRight: 50
   },
   textoMesa: {
     fontWeight: "bold",
