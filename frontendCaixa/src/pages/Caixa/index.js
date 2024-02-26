@@ -12,13 +12,11 @@ export default function Caixa() {
     useEffect(() => {
 
         async function verificarLSToken() {
-            const resposta = await apiLocal.get("/ListarUnicoUsuario")
+            const resposta = await apiLocal.post("/ListarUnicoUsuario")
 
             if (resposta.data.dados) {
                 navigation("/")
                 return
-            } else if (resposta.data.id) {
-                navigation("/Caixa")
             }
         }
         verificarLSToken()
