@@ -4,12 +4,12 @@ import { hash } from "bcryptjs";
 interface CriarAtendentes {
   nome: string;
   cpf: string;
-  senha: string;
+  password: string;
 }
 
 class CriarAtendentesServices {
-  async execute({ nome, cpf, senha }: CriarAtendentes) {
-    const senhaCrypt = await hash(senha, 8);
+  async execute({ nome, cpf, password }: CriarAtendentes) {
+    const senhaCrypt = await hash(password, 8);
 
     await prismaClient.atendente.create({
       data: {

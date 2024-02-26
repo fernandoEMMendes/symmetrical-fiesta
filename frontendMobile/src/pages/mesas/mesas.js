@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 
-console.disableYellowBox = true;
+console.disableYellowBox = true
 
 export default function Mesas() {
   const navigation = useNavigation();

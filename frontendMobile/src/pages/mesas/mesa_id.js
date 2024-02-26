@@ -9,13 +9,14 @@ import {
   Image,
 } from "react-native";
 
-import { useEffect, useState } from "react";
-import { useNavigation, route } from "@react-navigation/native";
+//import { useEffect, useState } from "react";
+//import { useNavigation, route } from "@react-navigation/native";
 
-import apiLocal from "../../api/apiLocal";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+//import apiLocal from "../../api/apiLocal";
+//import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function IDmesas({ navigation, route }) {
+
   // const navigation = useNavigation();
   // const [mesa, setMesa] = useState([""]);
 
@@ -46,7 +47,7 @@ export default function IDmesas({ navigation, route }) {
   return (
     <SafeAreaView>
       <View>
-        <Text>Esta é a mesa {route.params.mesaId}</Text>
+        <Text>Esta é a Mesa: {route.params.mesaId}</Text>
       </View>
       <View>
         <TouchableOpacity>
