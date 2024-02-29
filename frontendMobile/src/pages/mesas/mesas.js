@@ -23,6 +23,8 @@ export default function Mesas() {
   const [respNome, setRespNome] = useState("");
   const [respToken, setRespToken] = useState("");
 
+
+
   useEffect(() => {
     async function handleAsyncNome() {
       const iNome = JSON.parse("@nome");
@@ -52,6 +54,7 @@ export default function Mesas() {
           Authorization: "Bearer " + `${token}`,
         },
       });
+      mesa.sort((a, b) => a - b)
       setMesa(resposta.data);
       if (!resposta.data) {
         navigation.navigate("inicial");
@@ -69,7 +72,7 @@ export default function Mesas() {
 
   return (
     <View style={styles.container}>
-      
+
       <View style={styles.mesaContainer2}>
         {mesa.map((lista) => {
           return (
@@ -87,7 +90,9 @@ export default function Mesas() {
                       source={require("../../../images/mesa.png")}
                       style={styles.mesa}
                     />
-                    <Text style={styles.textoMesa}>{lista.numero_mesa}</Text>
+                    <Text style={styles.textoMesa}>{
+                      lista.numero_mesa
+                    }</Text>
                   </TouchableOpacity>
                 </>
               )}
