@@ -32,6 +32,7 @@ model Produtos {
 
   create_at DateTime? @default(now())
   update_at DateTime? @default(now())
+  Pedidos   Pedidos[]
 
   @@map("produtos")
 }
@@ -39,19 +40,8 @@ model Produtos {
 model Pedidos {
   id String @id @default(uuid())
 
-  item1  String
-  quant1 String
-  item2  String?
-  quant2 String?
-  item3  String?
-  quant3 String?
-  item4  String?
-  quant4 String?
-  item5  String?
-  quant5 String?
-
-  atendente   Atendente @relation(fields: [atendenteID], references: [id_atendente])
-  atendenteID String
+  produto   Produtos @relation(fields: [protudoID], references: [id])
+  protudoID String
 
   mesa   Mesa   @relation(fields: [mesaID], references: [id_mesa])
   mesaID String
@@ -67,8 +57,6 @@ model Atendente {
 
   create_at DateTime? @default(now())
   update_at DateTime? @default(now())
-
-  pedidos Pedidos[]
 
   @@map("atendentes")
 }
