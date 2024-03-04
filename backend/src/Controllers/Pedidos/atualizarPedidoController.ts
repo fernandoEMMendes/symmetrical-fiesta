@@ -3,13 +3,10 @@ import { atualizarPedidoService } from "../../Services/Pedidos/atualizarPedidoCo
 
 export class atualizarPedidoController {
     async handle(req: Request, res: Response) {
-        const { novoItem1, novoItem2, novoItem3,
-            novoItem4, novoItem5, atendenteID,
-            mesaID, pedidoId, novoQuant1, novoQuant2, novoQuant3, novoQuant4, novoQuant5 } = req.body
+        const { mesaID, pedidoId, produtoID, quant } = req.body
         const atualizar = new atualizarPedidoService()
         const resposta = await atualizar.execute({
-            novoItem1, novoItem2, novoItem3, novoItem4, novoItem5,
-            atendenteID, mesaID, pedidoId, novoQuant1, novoQuant2, novoQuant3, novoQuant4, novoQuant5
+            mesaID, pedidoId, produtoID, quant
         })
     }
 }

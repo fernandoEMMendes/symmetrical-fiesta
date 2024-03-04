@@ -32,7 +32,8 @@ model Produtos {
 
   create_at DateTime? @default(now())
   update_at DateTime? @default(now())
-  Pedidos   Pedidos[]
+
+  Pedidos Pedidos[]
 
   @@map("produtos")
 }
@@ -40,8 +41,10 @@ model Produtos {
 model Pedidos {
   id String @id @default(uuid())
 
-  produto   Produtos @relation(fields: [protudoID], references: [id])
-  protudoID String
+  produto   Produtos @relation(fields: [produtoID], references: [id])
+  produtoID String
+
+  quant String
 
   mesa   Mesa   @relation(fields: [mesaID], references: [id_mesa])
   mesaID String
