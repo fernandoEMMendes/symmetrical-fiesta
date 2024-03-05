@@ -11,21 +11,29 @@ export default function Home() {
 
     const { signIn } = useContext(AuthContext)
 
-    const lsToken = localStorage.getItem("@PJI2024")
-    const token = JSON.parse(lsToken)
+    
 
     useEffect(() => {
-
+        const lsToken = localStorage.getItem("@PJI2024")
+        const token = JSON.parse(lsToken)
+        if(!token){
+            navigation('/')
+        }else if (token){
         async function verificarLSToken() {
-            const resposta = await apiLocal.get("/ListarUnicoUsuario")
-
+            const resposta = await apiLocal.get("/ListarUnicoUsuario",{
+                headers:{
+                    Authorization: 'Bearer ' + `${token}`
+                }
+            })
             if (resposta.data.dados) {
                 navigation("/")
                 return
+            }else if (resposta.data.id){
+                navigation('/Dashboard')
+                return
             }
-        }
-        verificarLSToken()
-    }, [token])
+        }verificarLSToken()
+    }}, [])
 
 
     async function handleLogin(e) {
@@ -45,7 +53,7 @@ export default function Home() {
             localStorage.setItem("@PJI2024", JSON.stringify(token))
 
             toast.success("Login efetuado com sucesso!")
-            navigation("/Caixa")
+            navigation("/Dashboard")
             return
 
         } catch (err) {
@@ -63,10 +71,15 @@ export default function Home() {
             <div>
                 <form onSubmit={handleLogin}>
                     <label>Nome🎭</label>
-                    <input placeholder="Escreva o nome aqui!" value={nome} onChange={(e) => { setNome(e.target.value) }} />
+                    <input placeholder="Escreva o nome aqui!" 
+                    value={nome} 
+                    onChange={(e) =>setNome(e.target.value) } />
 
                     <label>Senha🔑</label>
-                    <input placeholder="Escreva a senha aqui!" value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                    <input 
+                    placeholder="Escreva a senha aqui!" 
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)} />
 
                     <button type="submit">Logar</button>
                 </form>

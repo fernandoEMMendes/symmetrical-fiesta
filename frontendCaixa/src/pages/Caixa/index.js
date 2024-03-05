@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import {useEffect } from "react"
+import {useNavigate}  from "react-router-dom"
 import apiLocal from "../../APIs/apiLocal"
 
 export default function Caixa() {
