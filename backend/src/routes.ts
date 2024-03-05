@@ -49,7 +49,7 @@ rotas.get("/ListarPedido", isAuth, new listarPedidoController().handle)
 
 //Usuários
 rotas.post("/CriarUsuario", new criarUsuarioController().handle)
-rotas.post("/ListarUnicoUsuario", isAuth, new listarUnicoUsuarioController().handle)
+rotas.get("/ListarUnicoUsuario", new listarUnicoUsuarioController().handle)
 rotas.post("/LoginUsuario", new loginUsuarioController().handle)
 
 //ATENDENTES
