@@ -16,6 +16,59 @@ import apiLocal from "../../api/apiLocal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function IDmesas({ navigation, route }) {
+  const [produto, setProduto] = useState("");
+  const [mostraProduto, setMostraProduto] = useState("");
+  const [respNome, setRespNome] = useState("");
+  const [respToken, setRespToken] = useState("");
+
+  useEffect(() => {
+    async function handleAsyncNome() {
+      const iNome = JSON.parse("@nome");
+      const nNome = JSON.parse(iNome);
+      setRespToken("");
+      setRespNome(nNome);
+    }
+
+    async function handleAsyncToken() {
+      const iToken = await AsyncStorage.getItem("@token");
+      const token = JSON.parse(iToken);
+      setRespNome("");
+      setRespToken(token);
+    }
+
+    async function loadID() {
+      const iID = await AsyncStorage.getItem("@id_atendente");
+      const id = JSON.parse(iID);
+    }
+
+    async function verificaToken() {
+      const iToken = await AsyncStorage.getItem("@token");
+      const token = JSON.parse(iToken);
+
+      const resposta = await apiLocal.get("/ListarProduto/files", {
+        headers: {
+          Authorization: "Bearer " + `${token}`,
+        },
+      });
+      setProduto(resposta.data);
+      // console.log(resposta.data);
+      if (!resposta.data) {
+        navigation.navigate("inicial");
+        return;
+      }
+    }
+    verificaToken();
+  }, []);
+
+  // useEffect(() => {
+  //   async function mostrarProdutos() {
+  //     const resposta = await apiLocal.get("/ListarProduto/files",{
+  //       where: {
+
+  //       }
+  //     });
+  //   }
+  // }, []);
 
   function voltarTela() {
     navigation.navigate("mesas");
@@ -29,15 +82,23 @@ export default function IDmesas({ navigation, route }) {
       <View>
         <TextInput
           style={styles.buscar}
+          value={produto}
+          onChange={setProduto}
           inputMode="search"
           placeholder="Buscar produto..."
           placeholderTextColor="black"
           selectionColor="black"
+          autoComplete="name"
         />
       </View>
+      <TouchableOpacity>
+        <Text>Procurar</Text>
+      </TouchableOpacity>
       <View>
         <TouchableOpacity style={styles.botaoVoltar}>
-          <Text style={styles.textoVoltar} onPress={voltarTela}>Voltar</Text>
+          <Text style={styles.textoVoltar} onPress={voltarTela}>
+            Voltar
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -68,20 +129,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   botaoVoltar: {
-    borderColor: 'black',
-    backgroundColor: 'red',
+    borderColor: "black",
+    backgroundColor: "red",
     borderRadius: 8,
     borderWidth: 2,
     padding: 10,
     width: 120,
     marginTop: 20,
-
   },
   textoVoltar: {
     fontWeight: "bold",
-    color: 'white',
-    textAlign: 'center',
+    color: "white",
+    textAlign: "center",
     fontSize: 18,
-    paddingVertical: 2
-  }
+    paddingVertical: 2,
+  },
 });
