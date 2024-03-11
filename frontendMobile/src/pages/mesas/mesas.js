@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 
-console.disableYellowBox = true
+console.disableYellowBox = true;
 
 export default function Mesas() {
   const navigation = useNavigation();
@@ -22,8 +22,6 @@ export default function Mesas() {
   const [id, setId] = useState("");
   const [respNome, setRespNome] = useState("");
   const [respToken, setRespToken] = useState("");
-
-
 
   useEffect(() => {
     async function handleAsyncNome() {
@@ -54,7 +52,7 @@ export default function Mesas() {
           Authorization: "Bearer " + `${token}`,
         },
       });
-      mesa.sort((a, b) => a - b)
+      mesa.sort((a, b) => a - b);
       setMesa(resposta.data);
       if (!resposta.data) {
         navigation.navigate("inicial");
@@ -72,7 +70,6 @@ export default function Mesas() {
 
   return (
     <View style={styles.container}>
-
       <View style={styles.mesaContainer2}>
         {mesa.map((lista) => {
           return (
@@ -90,9 +87,7 @@ export default function Mesas() {
                       source={require("../../../images/mesa.png")}
                       style={styles.mesa}
                     />
-                    <Text style={styles.textoMesa}>{
-                      lista.numero_mesa
-                    }</Text>
+                    <Text style={styles.textoMesa}>{lista.numero_mesa}</Text>
                   </TouchableOpacity>
                 </>
               )}
@@ -129,12 +124,12 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     //gap: 30,
     //marginTop: -500,
-    marginLeft: 50
+    marginLeft: 50,
   },
   mesa: {
     width: 50,
     height: 50,
-    marginRight: 50
+    marginRight: 50,
   },
   textoMesa: {
     fontWeight: "bold",

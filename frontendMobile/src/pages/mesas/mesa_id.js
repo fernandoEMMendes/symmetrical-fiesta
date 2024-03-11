@@ -16,31 +16,12 @@ import apiLocal from "../../api/apiLocal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function IDmesas({ navigation, route }) {
-  const [produto, setProduto] = useState("");
+  const [produto, setProduto] = useState([""]);
   const [mostraProduto, setMostraProduto] = useState("");
   const [respNome, setRespNome] = useState("");
   const [respToken, setRespToken] = useState("");
 
   useEffect(() => {
-    async function handleAsyncNome() {
-      const iNome = JSON.parse("@nome");
-      const nNome = JSON.parse(iNome);
-      setRespToken("");
-      setRespNome(nNome);
-    }
-
-    async function handleAsyncToken() {
-      const iToken = await AsyncStorage.getItem("@token");
-      const token = JSON.parse(iToken);
-      setRespNome("");
-      setRespToken(token);
-    }
-
-    async function loadID() {
-      const iID = await AsyncStorage.getItem("@id_atendente");
-      const id = JSON.parse(iID);
-    }
-
     async function verificaToken() {
       const iToken = await AsyncStorage.getItem("@token");
       const token = JSON.parse(iToken);
@@ -51,7 +32,7 @@ export default function IDmesas({ navigation, route }) {
         },
       });
       setProduto(resposta.data);
-      // console.log(resposta.data);
+      console.log(resposta.data);
       if (!resposta.data) {
         navigation.navigate("inicial");
         return;
@@ -59,16 +40,6 @@ export default function IDmesas({ navigation, route }) {
     }
     verificaToken();
   }, []);
-
-  // useEffect(() => {
-  //   async function mostrarProdutos() {
-  //     const resposta = await apiLocal.get("/ListarProduto/files",{
-  //       where: {
-
-  //       }
-  //     });
-  //   }
-  // }, []);
 
   function voltarTela() {
     navigation.navigate("mesas");
@@ -79,18 +50,20 @@ export default function IDmesas({ navigation, route }) {
       <View>
         <Text style={styles.titulo}>MESA {route.params.mesaId}</Text>
       </View>
-      <View>
-        <TextInput
-          style={styles.buscar}
-          value={produto}
-          onChange={setProduto}
-          inputMode="search"
-          placeholder="Buscar produto..."
-          placeholderTextColor="black"
-          selectionColor="black"
-          autoComplete="name"
-        />
-      </View>
+      {produto.map((item) => {
+        return (
+          <View>
+            <TextInput
+              style={styles.buscar}
+              value={produto}
+              onBlur={(e) => setProduto(e.target.value)}
+              placeholder="Selecione o produto..."
+              placeholderTextColor="black"
+              selectionColor="black"
+            />
+          </View>
+        );
+      })}
       <TouchableOpacity>
         <Text>Procurar</Text>
       </TouchableOpacity>
@@ -113,7 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: "beige",
   },
   titulo: {
-    marginTop: -200,
+    marginTop: -170,
     fontSize: 30,
     fontWeight: "bold",
   },
