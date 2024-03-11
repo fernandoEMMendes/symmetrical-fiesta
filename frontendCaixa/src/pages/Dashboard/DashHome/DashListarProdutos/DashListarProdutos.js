@@ -17,7 +17,7 @@ export function DashListarProdutos(){
     
     return(
         <div>
-        <h1>Produtos</h1>
+        <h1 id='h1_ListarProdutos'>Produtos</h1>
         <div>
         {listarProdutos.map((produto)=>{
             return(
@@ -29,7 +29,7 @@ export function DashListarProdutos(){
                     </article>
 
                     <article id='artigo_ListarProdutosTituloDescricao'>
-                    <h1 id='h1_ListarProdutos'>{produto.nome}</h1>
+                    <h2 id='h2_ListarProdutos'>{produto.nome}</h2>
                     <p id='p_ListarProdutos'>{produto.descricao}</p>
                     </article>
                     <article id='artigo_ListarProdutosDeletar'>

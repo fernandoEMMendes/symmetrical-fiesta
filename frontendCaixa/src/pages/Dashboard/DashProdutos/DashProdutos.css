@@ -1,3 +1,35 @@
+
+#dash_Produtos{
+    display: flex;
+    width: 100%;
+    height: 10vh;
+    text-align: center;
+    font-size: 3rem;
+    color: #ffffff;
+    padding-bottom: 20px;
+    background-color: #f81919;
+}
+#dash_Produtos>h1{
+  width: 80%;
+  margin: auto;
+}
+#dash_Produtos>button{
+  width: 20%;
+  margin-top: 20px;
+  margin-right: 20px;
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 6px;
+  color: black;
+  font-weight: bolder;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+#dash_Produtos>button:hover{
+  background-color: rgba(0, 0, 0, 0.84);
+  border: 3px solid white;
+  color: white;
+}
 .containerApp{
     display: flex;
     justify-content: center;
@@ -34,16 +66,65 @@
   }
   #header_Modal_AddProdutos{
     color: black;
+    
   }
   #form_Modal_AddProduto{
+    display: block;
+  }
+  #form_Modal_LabelInputs{
+    width: 100%;
     display: flex;
   }
-  .label_Modal_AddProduto{
-    color: black;
+  #form_Modal_PrincipalLabel{
+    height: 150px;
+    width: 30%;
+    margin: auto;
     margin-top: 20px;
-    width: 50%;
+  }
+  #form_Modal_PrincipalLabel label p{
+    font-size: 1.1rem;
+    padding-left: 60px;
+  }
+
+  #form_Modal_PrincipalInput{
+    height: 150px;
+    width: 70%;
+    margin: auto;
+    padding-right: 40px;
   }
   .input_Modal_AddProduto{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 90%;
+  }
+
+  #button_ModalAdd{
+    font-size: 1.1rem;
+    width: 30%;
+    height: 40px;
+    border: 3px solid green;
+    border-radius: 6px;
+    color: black;
     margin-top: 20px;
-    width: 50%;
+    margin-bottom: 40px;
+  }
+  #button_ModalAdd:hover{
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border: 3px solid black;
+    border-radius: 6px;
+  }
+  #button_ModalDel{
+    float: right;
+    color: white;
+    margin-right: 40px;
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+  }
+  #button_ModalDel:hover{
+    color: rgb(173, 173, 10);
+    cursor: pointer;
   }
