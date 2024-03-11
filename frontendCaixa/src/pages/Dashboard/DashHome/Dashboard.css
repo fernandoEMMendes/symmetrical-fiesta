@@ -45,6 +45,7 @@
 
 .ImgDash{
     height: 50vh;
+    width: 80%;
 }
 .ImgDash:hover{
     height: 55vh;
@@ -111,14 +112,9 @@
     }
     
     .ImgDash{
-        height: 40vh;
-        width: 50%;
-        margin: auto;
-    }
-    .ImgDash:hover{
         height: 45vh;
-        width: 60%;
-        cursor: pointer;
+        width: 80%;
+        margin: auto;
     }
     
     #dashFooter{

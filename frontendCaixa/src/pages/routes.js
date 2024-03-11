@@ -6,6 +6,7 @@ import Dashboard from "./Dashboard/DashHome"
 import DashProdutos from "./Dashboard/DashProdutos"
 import DashPedidos from "./Dashboard/DashPedidos"
 import CriarProdutos from "./Dashboard/DashProdutos"
+import { DashListarProdutos } from "./Dashboard/DashHome/DashListarProdutos/DashListarProdutos"
 
 export default function Rotas() {
     return (
@@ -19,6 +20,7 @@ export default function Rotas() {
                 
                 
                     <Route path="/DashProdutos" element={<DashProdutos/>}/>
+                    <Route path="/ListarProdutos" element={<DashListarProdutos/>}/>
                     <Route path="/CriarProdutos" element={<CriarProdutos/>}/>
 
 

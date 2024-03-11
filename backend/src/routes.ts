@@ -38,7 +38,7 @@ import { ListarMesaUnicaController } from "./Controllers/Mesa/ListarMesaUnicaCon
 
 //Produtos
 rotas.post("/CriarProduto", upload.single('file'), new criarProdutoController().handle)
-rotas.get("/ListarProduto/files", isAuth, new listarProdutoController().handle)
+rotas.get("/ListarProduto/files", new listarProdutoController().handle)//isAuth removido para teste
 rotas.post("/ListarUnicoProduto/:id", isAuth, new listarUnicoProdutoController().handle)
 rotas.delete("/ApagarProduto", isAuth, new apagarProdutoController().handle)
 rotas.put("/AtualizarProduto", isAuth, new atualizarProdutoController().handle)
