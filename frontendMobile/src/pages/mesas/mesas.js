@@ -52,7 +52,6 @@ export default function Mesas() {
           Authorization: "Bearer " + `${token}`,
         },
       });
-      mesa.sort((a, b) => a - b);
       setMesa(resposta.data);
       if (!resposta.data) {
         navigation.navigate("inicial");
@@ -115,15 +114,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "column",
     gap: 25,
-    marginTop: 30,
   },
   mesaContainer2: {
     flex: 1,
     justifyContent: "center",
     flexDirection: "row",
     flexWrap: "wrap",
-    //gap: 30,
-    //marginTop: -500,
+    gap: 10,
+    marginTop: 90,
     marginLeft: 50,
   },
   mesa: {
