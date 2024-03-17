@@ -1,0 +1,11 @@
+como ver o ip da maquina:
+
+abrir o cmd (Prompt de Comando)
+
+digitar ip config
+
+visualizar Endereço IPv4
+
+exemplo: 
+
+Endereço IPv4 . . . . . .  192.168.0.115
