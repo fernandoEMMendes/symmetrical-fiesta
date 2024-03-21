@@ -30,7 +30,7 @@ export default function Dashboard() {
             toast.warning('Existe Campos em Branco')
         }
         try {
-            await apiLocal.post('/CriarUsuario', {
+            await apiLocal.post('/CriarAtendentes', {
                 nome,
                 senha
             })
