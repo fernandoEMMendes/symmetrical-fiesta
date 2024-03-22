@@ -9,6 +9,7 @@ import {
   Image,
   Modal,
   Button,
+  ScrollView,
 } from "react-native";
 
 import { useEffect, useState } from "react";
@@ -18,11 +19,9 @@ import apiLocal from "../../api/apiLocal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function IDmesas({ navigation, route }) {
-  const [modalAberto, setModalAberto] = useState(false);
+
   const [produto, setProduto] = useState([""]);
-  const [mostraProduto, setMostraProduto] = useState("");
-  const [respNome, setRespNome] = useState("");
-  const [respToken, setRespToken] = useState("");
+  const [buscar, setBuscar] = useState("")
 
   useEffect(() => {
     async function verificaToken() {
@@ -43,12 +42,7 @@ export default function IDmesas({ navigation, route }) {
     verificaToken();
   }, [produto]);
 
-  function abrirModal() {
-    setModalAberto(true);
-  }
-  function fecharModal() {
-    setModalAberto(false);
-  }
+
 
   function voltarTela() {
     navigation.navigate("mesas");
@@ -56,53 +50,29 @@ export default function IDmesas({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
-        <Text style={styles.titulo}>MESA {route.params.mesaId}</Text>
-      </View>
-      <TouchableOpacity onPress={abrirModal}>
-        <Text>Inserir Produtos:</Text>
-      </TouchableOpacity>
-      <Modal visible={modalAberto} animationType="slide">
-        <Text>Produto:</Text>
-        <Text>Descrição:</Text>
-        {produto.map((item) => {
-          return (
-            <>
-              <View>
-                <Text>{item.nome}</Text>
-                <Text>{item.descricao}</Text>
-              </View>
-            </>
-          );
-        })}
+      <ScrollView>
+
+        <TextInput placeholder="Texto aqui" style={{ fontSize: 30 }} />
+
         <View>
-          <TouchableOpacity onPress={fecharModal}>
-            <Text>Fechar</Text>
+          <TouchableOpacity style={styles.botaoVoltar}>
+            <Text style={styles.textoVoltar} onPress={voltarTela}>
+              Voltar
+            </Text>
           </TouchableOpacity>
         </View>
-      </Modal>
-
-      <TouchableOpacity>
-        <Text>Procurar</Text>
-      </TouchableOpacity>
-      <View>
-        <TouchableOpacity style={styles.botaoVoltar}>
-          <Text style={styles.textoVoltar} onPress={voltarTela}>
-            Voltar
-          </Text>
-        </TouchableOpacity>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  //   backgroundColor: "beige",
-  // },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "beige",
+  },
   // titulo: {
   //   marginTop: -170,
   //   fontSize: 30,
