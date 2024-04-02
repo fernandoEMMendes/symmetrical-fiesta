@@ -7,10 +7,13 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
+  FlatList,
   Modal,
   Button,
   ScrollView,
 } from "react-native";
+
+import {SearchBar, ListItem } from 'react-native-elements'
 
 import { useEffect, useState } from "react";
 import { useNavigation, route } from "@react-navigation/native";
@@ -21,7 +24,20 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function IDmesas({ navigation, route }) {
 
   const [produto, setProduto] = useState([""]);
-  const [buscar, setBuscar] = useState("")
+
+  //https://www.geeksforgeeks.org/how-to-add-searchbar-in-react-native/
+
+const nome = produto.map((item) => item.nome)
+
+funcaoProcurar = (text) => { 
+  const updatedData = this.arrayholder.filter((item) => { 
+    const item_data = `${item.nome.toUpperCase()})`; 
+    const text_data = text.toUpperCase(); 
+    return item_data.indexOf(text_data) > -1; 
+  }); 
+  this.setState({ data: updatedData, searchValue: text }); 
+}; 
+
 
   useEffect(() => {
     async function verificaToken() {
@@ -40,31 +56,40 @@ export default function IDmesas({ navigation, route }) {
       }
     }
     verificaToken();
-  }, [produto]);
+  }, []);
 
+  // useEffect(() => {
+  //   async function localizaProduto(){
+  //     const iToken = await AsyncStorage.getItem('@token')
+  //     const token = JSON.parse(iToken)
+  //     const resposta = await apiLocal.get('')
+  //   }
+  // }, [])
 
 
   function voltarTela() {
     navigation.navigate("mesas");
   }
+  
+    return ( 
+      <View style={styles.container}> 
+        <SearchBar 
+          placeholder="Search Here..."
+          lightTheme 
+          round 
+          value={this.state.searchValue} 
+          onChangeText={(text) => this.searchFunction(text)} 
+          autoCorrect={false} 
+        /> 
+        <FlatList 
+          data={this.state.data} 
+          renderItem={renderItem} 
+          keyExtractor={(item) => item.id} 
+        /> 
+      </View> 
+    ); 
+  } 
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-
-        <TextInput placeholder="Texto aqui" style={{ fontSize: 30 }} />
-
-        <View>
-          <TouchableOpacity style={styles.botaoVoltar}>
-            <Text style={styles.textoVoltar} onPress={voltarTela}>
-              Voltar
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -73,6 +98,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "beige",
   },
+  container2: { 
+    marginTop: 30, 
+    padding: 2, 
+    width: 250
+  }, 
+  item: { 
+    backgroundColor: "#f5f520", 
+    padding: 20, 
+    marginVertical: 8, 
+    marginHorizontal: 16, 
+  }, 
   // titulo: {
   //   marginTop: -170,
   //   fontSize: 30,
