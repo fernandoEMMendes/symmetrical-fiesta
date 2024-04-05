@@ -15,6 +15,7 @@ export default function Dashboard() {
     const [modalAberto, setModalAberto] = useState(false)
     const [nome, setNome] = useState('')
     const [senha, setSenha] = useState('')
+    const [cpf, setCpf] = useState("")
 
 
     function abrirModal() {
@@ -26,13 +27,14 @@ export default function Dashboard() {
 
     async function CadastroCachorroLoko(e) {
         e.preventDefault()
-        if (!nome || !senha) {
+        if (!nome || !senha || !cpf) {
             toast.warning('Existe Campos em Branco')
         }
         try {
             await apiLocal.post('/CriarAtendentes', {
                 nome,
-                senha
+                cpf,
+                password: senha
             })
             setNome('')
             setSenha('')
@@ -96,6 +98,12 @@ function Sair() {
                             placeholder='Senha Funcionario' 
                             value={senha}
                             onChange={(e) => setSenha(e.target.value)}
+                            /><br />
+                        <label>CPF:</label>
+                        <input type="text"
+                            placeholder='CPF Funcionario' 
+                            value={cpf}
+                            onChange={(e) => setCpf(e.target.value)}
                             /><br />
                         <button type='submit'>Cadastrar</button>
 
