@@ -50,6 +50,7 @@ export default function IdMesas({ navigation, route }) {
   //
   //
   //
+  //
 
   const styles = StyleSheet.create({
     container: {
