@@ -15,15 +15,17 @@ import {
 
 import { SearchBar, ListItem } from 'react-native-elements'
 
-import { useEffect, useState } from "react";
+import { Component, useEffect, useState } from "react";
 import { useNavigation, route } from "@react-navigation/native";
 
 import apiLocal from "../../api/apiLocal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Search from "./searchBox";
 
 console.disableYellowBox = true
 
 export default function IdMesas({ navigation, route }) {
+
   const [produto, setProduto] = useState([""])
 
   useEffect(() => {
@@ -44,6 +46,8 @@ export default function IdMesas({ navigation, route }) {
     }
     verificaToken();
   }, []);
+
+  <Search />
 
   //https://www.geeksforgeeks.org/how-to-add-searchbar-in-react-native/
   //
