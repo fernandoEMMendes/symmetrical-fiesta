@@ -5,10 +5,10 @@ import {
     FlatList,
 } from "react-native";
 
-import { SearchBar, ListItem } from 'react-native-elements'
+import { SearchBar } from 'react-native-elements'
 
-import { Component, useEffect, useState } from "react";
-import { useNavigation, route } from "@react-navigation/native";
+import { Component, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 import apiLocal from "../../api/apiLocal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
