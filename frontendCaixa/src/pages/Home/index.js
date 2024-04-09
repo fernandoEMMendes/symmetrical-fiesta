@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { useState, useEffect, useContext } from "react"
 import { AuthContext } from "../../Context"
 import { toast } from "react-toastify"
+import "./home.css";
 
 export default function Home() {
     const navigation = useNavigate()
@@ -65,23 +66,24 @@ export default function Home() {
     return (
         <div>
             <div>
-                <h1>Caixa - Login</h1>
+                <h1 className="juju">Caixa - Login</h1>
             </div>
 
-            <div>
-                <form onSubmit={handleLogin}>
-                    <label>Nome🎭</label>
-                    <input placeholder="Escreva o nome aqui!" 
+            <div className="formato">
+                <form  onSubmit={handleLogin}>
+                    <label >Nome🎭</label>
+                    <input   placeholder="Escreva o nome aqui!" 
                     value={nome} 
                     onChange={(e) =>setNome(e.target.value) } />
-
-                    <label>Senha🔑</label>
+                        <br/>
+                        
+                    <label >Senha🔑</label>
                     <input 
                     placeholder="Escreva a senha aqui!" 
                     value={password} 
                     onChange={(e) => setPassword(e.target.value)} />
-
-                    <button type="submit">Logar</button>
+<br/>
+                    <button className="roar"  type="submit">Logar</button>
                 </form>
             </div>
 

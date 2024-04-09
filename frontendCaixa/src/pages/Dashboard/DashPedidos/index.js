@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
-import { Link } from "react-router-dom";
+import { Link, Route, useNavigate } from "react-router-dom";
 import mesaIcone from "../../../img/mesa.png";
 
 import apiLocal from "../../../APIs/apiLocal";
 
 export default function DashPedidos() {
+  const navegacao = useNavigate()
   const [mesa, setMesa] = useState([""]);
   const [modalAberto, setModalAberto] = useState(false);
   const [mesaId, setMesaId] = useState(null);
@@ -38,9 +39,13 @@ export default function DashPedidos() {
     setModalAberto(false);
   }
 
+function Voltar(){
+  navegacao('/Dashboard')
+}
+
   return (
     <section>
-      <h1>Dashboard Pedidos </h1>
+      <h1 className="remero">Dashboard Pedidos </h1>
       {mesa.map((lista) => {
         return (
           <>
@@ -53,6 +58,11 @@ export default function DashPedidos() {
               <button onClick={fecharModal}>Voltar</button>
               <button>Fechar mesa</button>
             </Modal>
+<div>
+  
+
+            <button onClick={Voltar}>Voltar</button>
+</div>
           </>
         );
       })}

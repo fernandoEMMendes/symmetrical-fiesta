@@ -5,8 +5,10 @@ import { DashListarProdutos } from "../DashHome/DashListarProdutos/DashListarPro
 import Modal from "react-modal";
 import apiLocal from "../../../APIs/apiLocal";
 import "./DashProdutos.css";
+import { useNavigate } from "react-router-dom";
 
 export default function CriarProdutos() {
+  const navegacao = useNavigate()
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [preco, setPreco] = useState("");
@@ -52,9 +54,14 @@ export default function CriarProdutos() {
     setModalAberto(false);
   }
 
+  function Voltar(){
+    navegacao('/Dashboard')
+  }
+
   return (
     <section>
       <header id="dash_Produtos">
+      <button onClick={Voltar}>Voltar</button>
         <h1>Dashboard</h1>
         <button onClick={abrirModal}>Adicionar Produto</button>
       </header>
@@ -136,6 +143,7 @@ export default function CriarProdutos() {
           </main>
         </Modal>
       </div>
+ 
       <div>
         <DashListarProdutos />
       </div>
