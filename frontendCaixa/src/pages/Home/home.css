@@ -1,3 +1,5 @@
+
+
 .juju{
     display: flex;
     width: 100%;
@@ -5,8 +7,11 @@
     text-align: center;
     font-size: 3rem;
     color: #ffffff;
+    padding-top: 20px;
     padding-bottom: 20px;
-    background-color: #f81919;}
+    background-color: #f81919;
+    justify-content: center;
+}
 
     .formato{
         display: flex;
@@ -32,3 +37,15 @@
         
     }
     
+    .campo{
+        width: 20%;
+        margin-top: 20px;
+        margin-right: 20px;
+        background-color: white;
+        border: 3px solid black;
+        border-radius: 6px;
+        color: black;
+        font-weight: bolder;
+        font-size: 1.3rem;
+        cursor: pointer;
+    }

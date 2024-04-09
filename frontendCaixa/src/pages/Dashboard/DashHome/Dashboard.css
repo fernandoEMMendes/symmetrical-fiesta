@@ -85,6 +85,10 @@
         max-width: 1023px;
         margin: auto;
         justify-content: center;
+        
+        
+        
+        
     }
     #dash_Header{
         width: 100%;
@@ -94,6 +98,7 @@
         color: #ffffff;
         background-color: #f81919;
     }
+
     #dashHeaderH1{
         padding-top: 20px;
     }
@@ -133,4 +138,42 @@
     #dashH2{
         padding-top: 1%;
     }
+
+
+
+    
     }
+
+    .logoff:hover{
+        background-color: rgba(0, 0, 0, 0.84);
+        border: 3px solid white;
+        color: white;
+    }
+        .logoff{
+     
+            width: 20%;
+            margin-top: 20px;
+            margin-right: 20px;
+            background-color: white;
+            border: 3px solid black;
+            border-radius: 6px;
+            color: black;
+            font-weight: bolder;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+   .minusdall{
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    right: 40px;
+    bottom: 40px;
+    background-color: rgba(143, 14, 14, 0.857);
+    width: 50%;
+    padding-top: 20px;
+    border-radius: 6px;
+    text-align: center;
+    margin: auto;
+   }
+

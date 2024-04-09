@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { Link, Route, useNavigate } from "react-router-dom";
 import mesaIcone from "../../../img/mesa.png";
-
+import './pedido.css'
 import apiLocal from "../../../APIs/apiLocal";
 
 export default function DashPedidos() {
@@ -45,11 +45,17 @@ function Voltar(){
 
   return (
     <section>
-      <h1 className="remero">Dashboard Pedidos </h1>
+      <header >
+      <h1  id="romero">Dashboard Pedidos </h1>
+      <button className="tingas" onClick={Voltar}>Voltar</button>
+
+
+      </header>
       {mesa.map((lista) => {
         return (
           <>
-            <button value={mesa} onClick={(e) => abrirModal(e.target.value)}>
+          <br/>
+            <button className="mesa" value={mesa} onClick={(e) => abrirModal(e.target.value)}>
               <img src={mesaIcone} alt="icone mesa" />
               <h4>{lista.numero_mesa}</h4>
             </button>
@@ -58,11 +64,6 @@ function Voltar(){
               <button onClick={fecharModal}>Voltar</button>
               <button>Fechar mesa</button>
             </Modal>
-<div>
-  
-
-            <button onClick={Voltar}>Voltar</button>
-</div>
           </>
         );
       })}

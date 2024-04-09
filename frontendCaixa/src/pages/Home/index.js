@@ -65,20 +65,20 @@ export default function Home() {
 
     return (
         <div>
-            <div>
+            <div id="headerjuju">
                 <h1 className="juju">Caixa - Login</h1>
             </div>
 
             <div className="formato">
                 <form  onSubmit={handleLogin}>
                     <label >Nome🎭</label>
-                    <input   placeholder="Escreva o nome aqui!" 
+                    <input className="campo"  placeholder="Escreva o nome aqui!" 
                     value={nome} 
                     onChange={(e) =>setNome(e.target.value) } />
                         <br/>
                         
-                    <label >Senha🔑</label>
-                    <input 
+                    <label>Senha🔑</label>
+                    <input className="campo" 
                     placeholder="Escreva a senha aqui!" 
                     value={password} 
                     onChange={(e) => setPassword(e.target.value)} />

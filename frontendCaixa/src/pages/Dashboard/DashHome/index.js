@@ -2,7 +2,7 @@ import './Dashboard.css'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Modal from 'react-modal'
-
+import "./atendentes.css";
 import ImgPedidos from '../DashMultimidia/pedidos.png'
 import ImgProdutos from '../DashMultimidia/Produtos.png'
 import { Flip, toast } from 'react-toastify'
@@ -60,13 +60,14 @@ function Sair() {
 }
 
     return (
-        <section id='header_Principal'>
+        <section  id='header_Principal'>
+                
             <header id='dash_Header'>
                 <h1>Dashboard</h1>
-                <button onClick={Sair}>
-                    Logoff
-                </button>
+                <button className='logoff' onClick={Sair}>Logoff</button>
+              
             </header>
+                
             <main id='corpo_Principal'>
 
                 <article className='corpo_Filho'>
@@ -84,37 +85,43 @@ function Sair() {
 
                     <h2 id='dashH2'>Funções Administrativas</h2>
                 </button>
-                <Modal isOpen={modalAberto} >
-                    <h2>CADASTRAR FUNCIONÁRIO</h2>
+                <Modal  className={'minusdall'} isOpen={modalAberto} >
+                    <h2  className='hmodal'>CADASTRAR FUNCIONÁRIO</h2>
                     <form onSubmit={CadastroCachorroLoko}>
-                        <label>Nome:</label>
-                        <input type="text"
+                        <div className='brmodal' >
+                        <label >Nome:</label>
+                        <input className='bmodal' type="text"
                             placeholder='Nome Funcionario'
                             value={nome}
                             onChange={(e) => setNome(e.target.value)}
                             /><br />
                         <label>Senha:</label>
-                        <input type="text"
+                        <input className='bmodal' type="text"
                             placeholder='Senha Funcionario' 
                             value={senha}
                             onChange={(e) => setSenha(e.target.value)}
                             /><br />
                         <label>CPF:</label>
-                        <input type="text"
+                        <input className='bmodal' type="text"
                             placeholder='CPF Funcionario' 
                             value={cpf}
+                            
                             onChange={(e) => setCpf(e.target.value)}
-                            /><br />
-                        <button type='submit'>Cadastrar</button>
+                            
+
+                               /><br />
+                               
+                        <button className='bbmodal' type='submit'>Cadastrar</button>
 
 
 
 
 
 
+
+                    <button className='smodal'  onClick={fecharModal} >Sair</button>
+                               </div>
                     </form>
-
-                    <button onClick={fecharModal} >Sair</button>
                 </Modal>
             </footer>
         </section>

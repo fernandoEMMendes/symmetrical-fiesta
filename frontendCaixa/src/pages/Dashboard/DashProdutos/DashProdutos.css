@@ -14,6 +14,8 @@
   margin: auto;
 }
 #dash_Produtos>button{
+
+  
   width: 20%;
   margin-top: 20px;
   margin-right: 20px;
@@ -42,9 +44,9 @@
     top: 40px;
     left: 40px;
     right: 40px;
-    bottom: 40px;
+    bottom: px;
     background-color: rgba(143, 14, 14, 0.857);
-    border-radius: 6px;
+    border-radius: px;
   }
   
   .Overlay {

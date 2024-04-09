@@ -1,0 +1,85 @@
+.hmodal{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    justify-content: center;
+    width: 100%;
+    height: 5vh;
+    text-align: center;
+    align-items:  center;
+    font-size: 3rem;
+   
+    padding-bottom: 20px;
+
+
+}
+.brmodal{
+    height: 150px;
+    width: 30%;
+    margin: auto;
+    margin-top: 20px;
+    font-size: 1.1rem;
+    padding-left: 60px;
+    
+}
+
+.bmodal{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 90%;
+}
+
+.bmodal{
+    font-size: 1.1rem;
+    width: 100%;
+    height: 20px;
+    border: 3px solid rgb(0, 0, 0);
+    border-radius: 6px;
+    color: black;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.bbmodal{
+    font-size: 1.1rem;
+    width: 100%;
+    height: 40px;
+    border: 3px solid green;
+    border-radius: 6px;
+    color: black;
+    margin-top: 20px;
+    margin-bottom: 40px;
+
+    
+}
+
+.bbmodal:hover{
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border: 3px solid black;
+    border-radius: 6px;
+}
+
+
+.smodal{
+    font-size: 1.1rem;
+    width: 100%;
+    height: 40px;
+    border: 3px solid rgb(0, 0, 0);
+    border-radius: 6px;
+    color: black;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.smodal:hover{
+    background-color: rgb(255, 0, 0);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border: 3px solid black;
+    border-radius: 6px;
+}
+
+
