@@ -7,6 +7,7 @@ import {
   ScrollView,
   Touchable,
   TouchableOpacity,
+  ToastAndroid,
 } from "react-native";
 
 import { SelectList } from 'react-native-dropdown-select-list'
@@ -23,6 +24,8 @@ export default function IdMesas({ navigation, route }) {
   const [produto, setProduto] = useState([""])
   const [selecionar, setSelecionar] = useState("")
   const [visible, setVisible] = useState(false)
+
+  const [quant, setQuant] = useState(1)
 
   useEffect(() => {
     async function verificaToken() {
@@ -50,9 +53,33 @@ export default function IdMesas({ navigation, route }) {
   }, []);
 
 
-
-  function adicionarProduto() {
+  function handleToggleModal() {
     setVisible(!visible)
+  }
+
+  function handleAdicionar() {
+    setQuant(quant + 1)
+  }
+
+  function handleRetirar() {
+    setQuant(quant - 1)
+  }
+
+  async function enviarPedido() {
+    try {
+
+      const idMesa = AsyncStorage.getItem("@idMesa")
+
+      const resposta = await apiLocal.post("/CriarPedido", {
+        produtoID: selecionar,
+        mesaID: idMesa,
+        quant: quant
+      })
+      console.log(resposta)
+
+    } catch (err) {
+      ToastAndroid(err.response.data.error)
+    }
   }
 
   return (
@@ -63,8 +90,8 @@ export default function IdMesas({ navigation, route }) {
           <SelectList
             setSelected={(nome) => setSelecionar(nome)}
             data={produto}
-            save="value"
-            onSelect={() => adicionarProduto()}
+            save="key"
+            onSelect={() => handleToggleModal()}
             label="Produtos"
             placeholder="Digite o nome do produto..."
             searchPlaceholder="Buscando..."
@@ -79,9 +106,17 @@ export default function IdMesas({ navigation, route }) {
             <SafeAreaView style={styles.modal}>
               <ScrollView>
                 <View>
-                  <Text>Modal Aerto</Text>
-                  <TouchableOpacity onPress={() => adicionarProduto()}>
+                  <Text>{selecionar}</Text>
+                  <TouchableOpacity onPress={() => handleToggleModal()}>
                     <Text>Fechar</Text>
+                  </TouchableOpacity>
+
+                  <Text>Quantidade: {quant}</Text>
+                  <TouchableOpacity onPress={handleAdicionar}>
+                    <Text>Adicionar</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={handleRetirar}>
+                    <Text>Retirar</Text>
                   </TouchableOpacity>
                 </View>
               </ScrollView>
@@ -110,6 +145,6 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlignVertical: "center",
     backgroundColor: "bisque",
-    margin:50,
+    margin: 50,
   },
 })

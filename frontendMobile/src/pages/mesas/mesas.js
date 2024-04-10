@@ -67,6 +67,15 @@ export default function Mesas() {
     navigation.navigate("inicial");
   }
 
+  function entrarMesa(id, mesa) {
+
+    AsyncStorage.setItem("@idMesa", id)
+
+    navigation.navigate("mesa_id", {
+      mesaId: mesa,
+    })
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.mesaContainer2}>
@@ -76,11 +85,7 @@ export default function Mesas() {
               {lista.length !== 0 && (
                 <>
                   <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate("mesa_id", {
-                        mesaId: `${lista.numero_mesa}`,
-                      })
-                    }
+                    onPress={() => entrarMesa(lista.id, lista.numero_mesa)}
                   >
                     <Image
                       source={require("../../../images/mesa.png")}
