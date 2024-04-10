@@ -25,6 +25,9 @@ export default function IdMesas({ navigation, route }) {
   const [selecionar, setSelecionar] = useState("")
   const [visible, setVisible] = useState(false)
 
+  const idMesa = AsyncStorage.getItem("@idMesa")
+  console.log(idMesa)
+
   const [quant, setQuant] = useState(1)
 
   useEffect(() => {
@@ -53,8 +56,15 @@ export default function IdMesas({ navigation, route }) {
   }, []);
 
 
-  function handleToggleModal() {
-    setVisible(!visible)
+  function handleToggleModalAbrir() {
+    setVisible(true)
+
+  }
+
+  function handleToggleModalFechar() {
+    setVisible(false)
+    // FAZER RESETAR MODAL
+
   }
 
   function handleAdicionar() {
@@ -62,40 +72,45 @@ export default function IdMesas({ navigation, route }) {
   }
 
   function handleRetirar() {
+    if (quant <= 1) {
+      return
+    }
     setQuant(quant - 1)
   }
 
   async function enviarPedido() {
     try {
-
-      const idMesa = AsyncStorage.getItem("@idMesa")
-
       const resposta = await apiLocal.post("/CriarPedido", {
         produtoID: selecionar,
         mesaID: idMesa,
         quant: quant
       })
-      console.log(resposta)
+      console.log(resposta.data)
 
     } catch (err) {
-      ToastAndroid(err.response.data.error)
+      console.log(err)
     }
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
+
+        <View>
+          <Text style={styles.containerText}>Mesa {route.params.mesaId}</Text>
+        </View>
 
         <View>
           <SelectList
             setSelected={(nome) => setSelecionar(nome)}
             data={produto}
             save="key"
-            onSelect={() => handleToggleModal()}
+            onSelect={() => handleToggleModalAbrir()}
             label="Produtos"
             placeholder="Digite o nome do produto..."
             searchPlaceholder="Buscando..."
             notFoundText="Produto não cadastrado..."
+
           />
 
           <Modal
@@ -106,18 +121,25 @@ export default function IdMesas({ navigation, route }) {
             <SafeAreaView style={styles.modal}>
               <ScrollView>
                 <View>
-                  <Text>{selecionar}</Text>
-                  <TouchableOpacity onPress={() => handleToggleModal()}>
-                    <Text>Fechar</Text>
+                  <TouchableOpacity onPress={handleToggleModalFechar}>
+                    <Text style={styles.modalFechar}>{"❌"}</Text>
                   </TouchableOpacity>
 
-                  <Text>Quantidade: {quant}</Text>
-                  <TouchableOpacity onPress={handleAdicionar}>
-                    <Text>Adicionar</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={handleRetirar}>
-                    <Text>Retirar</Text>
-                  </TouchableOpacity>
+                  <View style={styles.modalBotoes}>
+                    <TouchableOpacity onPress={handleRetirar}>
+                      <Text style={styles.modalText}>{"➖"}</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.modalText}>{quant}</Text>
+                    <TouchableOpacity onPress={handleAdicionar}>
+                      <Text style={styles.modalText}>{"➕"}</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View>
+                    <TouchableOpacity onPress={enviarPedido}>
+                      <Text style={styles.modalAdd}>Adicionar</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </ScrollView>
             </SafeAreaView>
@@ -134,17 +156,33 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 30,
     padding: 2,
+    margin: 30
   },
-  item: {
-    backgroundColor: "#f5f520",
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+  containerText: {
+    fontSize: 50
   },
   modal: {
     flex: 1,
     textAlignVertical: "center",
     backgroundColor: "bisque",
     margin: 50,
+    padding: 20,
+    borderRadius: 50
   },
+  modalText: {
+    fontSize: 50,
+    marginTop: 10,
+    marginBottom: 25
+  },
+  modalFechar: {
+    fontSize: 30,
+    textAlign: "right"
+  },
+  modalBotoes: {
+    flexDirection: 'row',
+  },
+  modalAdd: {
+    fontSize: 50,
+    marginTop: 300,
+  }
 })

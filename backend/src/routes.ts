@@ -45,7 +45,7 @@ rotas.delete("/ApagarProduto", isAuth, new apagarProdutoController().handle)
 rotas.put("/AtualizarProduto", isAuth, new atualizarProdutoController().handle)
 
 //Pedidos
-rotas.post("/CriarPedido", isAuth, new criarPedidoController().handle)
+rotas.post("/CriarPedido", new criarPedidoController().handle)
 rotas.get("/ListarPedido", isAuth, new listarPedidoController().handle)
 
 //Usuários

@@ -69,7 +69,9 @@ export default function Mesas() {
 
   function entrarMesa(id, mesa) {
 
-    AsyncStorage.setItem("@idMesa", id)
+    console.log("id: ",id, "num_mesa: ",mesa)
+    AsyncStorage.setItem("@idMesa", JSON.stringify(id))
+    AsyncStorage.setItem("@numMesa", JSON.stringify(mesa))
 
     navigation.navigate("mesa_id", {
       mesaId: mesa,
