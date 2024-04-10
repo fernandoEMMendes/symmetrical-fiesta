@@ -1,4 +1,4 @@
-import Rotas from "./Pages/routes"
+import Rotas from "./pages/routes"
 import AuthProvider from "./Context/index.js";
 import { ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'

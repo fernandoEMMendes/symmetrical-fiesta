@@ -10,6 +10,10 @@ export default function DashPedidos() {
   const [mesa, setMesa] = useState([""]);
   const [modalAberto, setModalAberto] = useState(false);
   const [mesaId, setMesaId] = useState(null);
+  const [mesaNumero, setMesaNumero] = useState('');
+
+
+
 
   useEffect(() => {
     async function verificaToken() {
@@ -24,6 +28,7 @@ export default function DashPedidos() {
       setMesa(resposta.data);
 
       if (!resposta.data) {
+
         alert("FAZER NAVEGAÇÃO INICIO");
         return;
       }
@@ -31,7 +36,11 @@ export default function DashPedidos() {
     verificaToken();
   }, [mesa]);
 
-  function abrirModal() {
+
+  function abrirModal(id) {
+    const mesa1 = (mesa.filter((item) => item.id_mesa === id))
+    const numero = Number(mesa1.map((itemN) => itemN.numero_mesa))
+    setMesaNumero(numero)
     setModalAberto(true);
   }
 
@@ -39,28 +48,41 @@ export default function DashPedidos() {
     setModalAberto(false);
   }
 
-function Voltar(){
-  navegacao('/Dashboard')
-}
+  function Voltar() {
+    navegacao('/Dashboard')
+  }
+
+  function entrarMesa(id, mesa) {
+
+    console.log("id: ", id, "num_mesa: ", mesa)
+    localStorage.setItem("@idMesa", JSON.stringify(id))
+    localStorage.setItem("@numMesa", JSON.stringify(mesa))
+
+    /*navigation.navegacao("mesa_id", {
+      mesaId: mesa,
+    })*/
+  }
+  //console.log(mesa)
+
 
   return (
     <section>
       <header >
-      <h1  id="romero">Dashboard Pedidos </h1>
-      <button className="tingas" onClick={Voltar}>Voltar</button>
+        <h1 id="romero"> Dashboard Pedidos </h1>
+        <button className="tingas" onClick={Voltar}>Voltar</button>
 
 
       </header>
       {mesa.map((lista) => {
         return (
           <>
-          <br/>
-            <button className="mesa" value={mesa} onClick={(e) => abrirModal(e.target.value)}>
+            <br />
+            <button className="mesa" onClick={() => abrirModal(lista.id_mesa)}>
               <img src={mesaIcone} alt="icone mesa" />
               <h4>{lista.numero_mesa}</h4>
             </button>
             <Modal isOpen={modalAberto}>
-              <h1>Mesa: {lista.numero_mesa}</h1>
+              <h1>Mesa: {mesaNumero}</h1>
               <button onClick={fecharModal}>Voltar</button>
               <button>Fechar mesa</button>
             </Modal>
