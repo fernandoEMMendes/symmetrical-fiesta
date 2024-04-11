@@ -16,6 +16,8 @@ import { atualizarProdutoController } from "./Controllers/Produtos/atualizarProd
 //Pedidos
 import { criarPedidoController } from "./Controllers/Pedidos/criarPedidoController"
 import { listarPedidoController } from './Controllers/Pedidos/listarPedidoController'
+import { ListarPedidoUnicoController } from "./Controllers/Pedidos/listarPedidoUnicoController";
+
 
 //Usuários
 import { criarUsuarioController } from "./Controllers/Usuarios/criarUsuarioController"
@@ -47,6 +49,7 @@ rotas.put("/AtualizarProduto", isAuth, new atualizarProdutoController().handle)
 //Pedidos
 rotas.post("/CriarPedido", new criarPedidoController().handle)
 rotas.get("/ListarPedido", isAuth, new listarPedidoController().handle)
+rotas.get("/ListarPedidoUnico/:id_pedido", isAuth, new ListarPedidoUnicoController().handle)
 
 //Usuários
 rotas.post("/CriarUsuario", new criarUsuarioController().handle)

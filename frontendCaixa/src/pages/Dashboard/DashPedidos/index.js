@@ -10,6 +10,7 @@ export default function DashPedidos() {
   const [mesa, setMesa] = useState([""]);
   const [modalAberto, setModalAberto] = useState(false);
   const [mesaId, setMesaId] = useState(null);
+  const [pedido, setPedido] = useState('')
   const [mesaNumero, setMesaNumero] = useState('');
 
 
@@ -37,6 +38,35 @@ export default function DashPedidos() {
   }, [mesa]);
 
 
+  useEffect(() => {
+
+    async function verificaToken() {
+      const iToken = await localStorage.getItem("@PJI2024");
+      const token = await JSON.parse(iToken);
+
+      const resposta = await apiLocal.get("/ListarPedido", {
+        headers: {
+          Authorization: "Bearer " + `${token}`,
+        },
+      });
+      setPedido(resposta.data);
+      console.log(resposta);
+
+      if (!resposta.data) {
+        alert("fazer navegação inicio");
+        return
+      }
+    }
+    verificaToken();
+
+
+
+
+  }, [pedido]);
+
+
+
+
   function abrirModal(id) {
     const mesa1 = (mesa.filter((item) => item.id_mesa === id))
     const numero = Number(mesa1.map((itemN) => itemN.numero_mesa))
@@ -44,25 +74,22 @@ export default function DashPedidos() {
     setModalAberto(true);
   }
 
+
+
   function fecharModal() {
     setModalAberto(false);
   }
+
+  function fazerpedido() {
+
+  }
+
 
   function Voltar() {
     navegacao('/Dashboard')
   }
 
-  function entrarMesa(id, mesa) {
 
-    console.log("id: ", id, "num_mesa: ", mesa)
-    localStorage.setItem("@idMesa", JSON.stringify(id))
-    localStorage.setItem("@numMesa", JSON.stringify(mesa))
-
-    /*navigation.navegacao("mesa_id", {
-      mesaId: mesa,
-    })*/
-  }
-  //console.log(mesa)
 
 
   return (
@@ -77,21 +104,54 @@ export default function DashPedidos() {
         return (
           <>
             <br />
+
             <button className="mesa" onClick={() => abrirModal(lista.id_mesa)}>
               <img src={mesaIcone} alt="icone mesa" />
               <h4>{lista.numero_mesa}</h4>
             </button>
-            <Modal className="Modalb" isOpen={modalAberto}>
-            
-            
-              <h1>Mesa: {mesaNumero}</h1>
-              <button onClick={fecharModal}>Voltar</button>
-              <button>Fechar mesa</button>
-            </Modal>
-          
           </>
         );
       })}
+      {pedido.map((item) => {
+        return (
+          <>
+<Modal className="Modalb" isOpen={modalAberto}>
+        <h1>Mesa: {mesaNumero}</h1>
+        <section>
+          <table>
+            <tr>
+              <th>Produto</th>
+              <th>Valor Unitario</th>
+              <th>QTDE</th>
+              <th>Subtotal</th>
+            </tr>
+            <tr>
+              <td></td>
+              <td>5</td>
+              <td>{item.quant}</td>
+              <td>5</td>
+            </tr>
+          </table>
+        </section>
+        <section className="secaovltotal">
+          <table>
+            <tr>
+              <th>Valor Total</th>
+            </tr>
+            <tr>
+              <td>45</td>
+            </tr>
+          </table>
+        </section>
+        <button onClick={fecharModal}>Voltar</button>
+        <button>Fechar mesa</button>
+      </Modal>
+          </>
+        )
+      })}
+      
+
+
     </section>
   );
 }
