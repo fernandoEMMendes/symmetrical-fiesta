@@ -81,11 +81,14 @@ export default function DashPedidos() {
               <img src={mesaIcone} alt="icone mesa" />
               <h4>{lista.numero_mesa}</h4>
             </button>
-            <Modal isOpen={modalAberto}>
+            <Modal className="Modalb" isOpen={modalAberto}>
+            
+            
               <h1>Mesa: {mesaNumero}</h1>
               <button onClick={fecharModal}>Voltar</button>
               <button>Fechar mesa</button>
             </Modal>
+          
           </>
         );
       })}
