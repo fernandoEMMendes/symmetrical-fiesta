@@ -1,150 +1,177 @@
-//****NÃO APAGAR. USAR ESTE COMO MODELO!!!!!!*********************************
+//ID MESAS FUNCIONANDO
 
-import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import apiLocal from "../../api/apiLocal";
 import {
+  Modal,
   SafeAreaView,
   View,
   Text,
   StyleSheet,
-  StatusBar,
+  ScrollView,
+  Touchable,
   TouchableOpacity,
-  TextInput,
-  Image,
+  ToastAndroid,
 } from "react-native";
-import { useEffect, useState } from "react";
 
-export default function Mesas() {
-  const navigation = useNavigation();
-  const [mesa, setMesa] = useState([""]);
-  //MOSTRAR MESAS
+import { SelectList } from "react-native-dropdown-select-list";
+import { useEffect, useState } from "react";
+import { useNavigation, route } from "@react-navigation/native";
+
+import apiLocal from "../../api/apiLocal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+console.disableYellowBox = true;
+
+export default function IdMesas({ navigation, route }) {
+  const [produto, setProduto] = useState([""]);
+  const [selecionar, setSelecionar] = useState("");
+  const [visible, setVisible] = useState(false);
+
+  const idMesa = AsyncStorage.getItem("@idMesa");
+  // console.log(idMesa)
+
+  const [quant, setQuant] = useState(1);
 
   useEffect(() => {
-    async function loadMesas() {
-      const token = await AsyncStorage.setItem("@token",
-      JSON.stringify(resposta.data.token)
-      );
-      const resposta = await apiLocal.get("/ListarMesas", {
+    async function verificaToken() {
+      const iToken = await AsyncStorage.getItem("@token");
+      const token = JSON.parse(iToken);
+
+      const resposta = await apiLocal.get("/ListarProduto/files", {
         headers: {
           Authorization: "Bearer " + `${token}`,
         },
       });
-      console.log(resposta);
-      setMesa(resposta.data);
+
+      let newArray = resposta.data.map((palmito) => {
+        return { key: palmito.id, value: palmito.nome };
+      });
+
+      setProduto(newArray);
+
+      if (!resposta.data) {
+        navigation.navigate("inicial");
+        return;
+      }
     }
-    loadMesas();
+    verificaToken();
   }, []);
 
-  // SELECIONAR A MESA E FAZER PEDIDO PARA A MESMA
-  function irProdutos() {
-    navigation.navigate("produtos");
+  function handleToggleModalAbrir() {
+    setVisible(true);
   }
 
-  // FAZER LOGOFF
-  function Logoff() {
-    AsyncStorage.removeItem("@token");
-    navigation.navigate("inicial");
+  function handleToggleModalFechar() {
+    setVisible(false);
+    // FAZER RESETAR MODAL
   }
+
+  function handleAdicionar() {
+    setQuant(quant + 1);
+  }
+
+  function handleRetirar() {
+    if (quant <= 1) {
+      return;
+    }
+    setQuant(quant - 1);
+  }
+
+  async function enviarPedido() {
+    try {
+      const resposta = await apiLocal.post("/CriarPedido", {
+        produtoID: selecionar,
+        mesaID: idMesa,
+        quant: quant,
+      });
+      console.log(resposta);
+    } catch (err) {
+      alert(err);
+    }
+  }
+
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <View>
+          <Text style={styles.containerText}>Mesa {route.params.mesaId}</Text>
+        </View>
 
-      {/* AQUI VÃO AS IMAGENS DAS MESAS PARA PODER SER REDIRECIONADA PARA A RESPECTIVA MESA */}
-      <View style={styles.mesaContainer}>
-        <TouchableOpacity onPress={irProdutos}>
-          <Image
-            source={require("../../../images/mesa.png")}
-            style={styles.mesa}
+        <View>
+          <SelectList
+            setSelected={(nome) => setSelecionar(nome)}
+            data={produto}
+            save="key"
+            onSelect={() => handleToggleModalAbrir()}
+            label="Produtos"
+            placeholder="Digite o nome do produto..."
+            searchPlaceholder="Buscando..."
+            notFoundText="Produto não cadastrado..."
           />
-          <Text style={styles.textoMesa}>MESA 1</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={irProdutos}>
-          <Image
-            source={require("../../../images/mesa.png")}
-            style={styles.mesa}
-          />
-          <Text style={styles.textoMesa}>MESA 2</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={irProdutos}>
-          <Image
-            source={require("../../../images/mesa.png")}
-            style={styles.mesa}
-          />
-          <Text style={styles.textoMesa}>MESA 3</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.mesaContainer2}>
-        <TouchableOpacity onPress={irProdutos}>
-          <Image
-            source={require("../../../images/mesa.png")}
-            style={styles.mesa}
-          />
-          <Text style={styles.textoMesa}>MESA 4</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={irProdutos}>
-          <Image
-            source={require("../../../images/mesa.png")}
-            style={styles.mesa}
-          />
-          <Text style={styles.textoMesa}>MESA 5</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={irProdutos}>
-          <Image
-            source={require("../../../images/mesa.png")}
-            style={styles.mesa}
-          />
-          <Text style={styles.textoMesa}>MESA 6</Text>
-        </TouchableOpacity>
-      </View>
-      {/* DESLOGAR DO APP */}
-      <TouchableOpacity onPress={Logoff} style={styles.footer}>
-        <Text style={styles.footerTexto}>ENCERRAR EXPEDIENTE</Text>
-      </TouchableOpacity>
-    </View>
+
+          <Modal visible={visible} animationType="fade" transparent={true}>
+            <SafeAreaView style={styles.modal}>
+              <ScrollView>
+                <View>
+                  <TouchableOpacity onPress={handleToggleModalFechar}>
+                    <Text style={styles.modalFechar}>{"❌"}</Text>
+                  </TouchableOpacity>
+
+                  <View style={styles.modalBotoes}>
+                    <TouchableOpacity onPress={handleRetirar}>
+                      <Text style={styles.modalText}>{"➖"}</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.modalText}>{quant}</Text>
+                    <TouchableOpacity onPress={handleAdicionar}>
+                      <Text style={styles.modalText}>{"➕"}</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View>
+                    <TouchableOpacity onPress={enviarPedido}>
+                      <Text style={styles.modalAdd}>Adicionar</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </ScrollView>
+            </SafeAreaView>
+          </Modal>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 30,
+    padding: 2,
+    margin: 30,
+  },
+  containerText: {
+    fontSize: 50,
+  },
+  modal: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "beige",
+    textAlignVertical: "center",
+    backgroundColor: "bisque",
+    margin: 50,
+    padding: 20,
+    borderRadius: 50,
   },
-  mesaContainer: {
-    flex: 1,
-    alignItems: "center",
+  modalText: {
+    fontSize: 50,
+    marginTop: 10,
+    marginBottom: 25,
+  },
+  modalFechar: {
+    fontSize: 30,
+    textAlign: "right",
+  },
+  modalBotoes: {
     flexDirection: "row",
-    gap: 55,
-    marginTop: -85,
   },
-  mesaContainer2: {
-    flex: 2,
-    alignItems: "center",
-    flexDirection: "row",
-    gap: 55,
-    marginTop: -500,
-  },
-  mesa: {
-    width: 50,
-    height: 50,
-  },
-  textoMesa: {
-    fontWeight: "bold",
-    fontSize: 20,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  footer: {
-    backgroundColor: "red",
-    height: 70,
-    width: 393,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  footerTexto: {
-    fontWeight: "bold",
-    fontSize: 23,
+  modalAdd: {
+    fontSize: 50,
+    marginTop: 300,
   },
 });

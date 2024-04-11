@@ -10,25 +10,26 @@ import {
   ToastAndroid,
 } from "react-native";
 
-import { SelectList } from 'react-native-dropdown-select-list'
+import { SelectList } from "react-native-dropdown-select-list";
 import { useEffect, useState } from "react";
 import { useNavigation, route } from "@react-navigation/native";
 
 import apiLocal from "../../api/apiLocal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-console.disableYellowBox = true
+console.disableYellowBox = true;
 
 export default function IdMesas({ navigation, route }) {
+  const [produto, setProduto] = useState([""]);
+  const [selecionar, setSelecionar] = useState("");
+  const [visible, setVisible] = useState(false);
+  const [itensPedido, setItensPedido] = useState([""]);
+  const [mesaId, setMesaId] = useState("");
 
-  const [produto, setProduto] = useState([""])
-  const [selecionar, setSelecionar] = useState("")
-  const [visible, setVisible] = useState(false)
+  const idMesa = AsyncStorage.getItem("@idMesa");
+  // console.log(idMesa)
 
-  const idMesa = AsyncStorage.getItem("@idMesa")
-  console.log(idMesa)
-
-  const [quant, setQuant] = useState(1)
+  const [quant, setQuant] = useState(1);
 
   useEffect(() => {
     async function verificaToken() {
@@ -42,8 +43,8 @@ export default function IdMesas({ navigation, route }) {
       });
 
       let newArray = resposta.data.map((palmito) => {
-        return { key: palmito.id, value: palmito.nome }
-      })
+        return { key: palmito.id, value: palmito.nome };
+      });
 
       setProduto(newArray);
 
@@ -55,47 +56,56 @@ export default function IdMesas({ navigation, route }) {
     verificaToken();
   }, []);
 
-
   function handleToggleModalAbrir() {
-    setVisible(true)
-
+    setVisible(true);
   }
 
   function handleToggleModalFechar() {
-    setVisible(false)
+    setVisible(false);
     // FAZER RESETAR MODAL
-
   }
 
   function handleAdicionar() {
-    setQuant(quant + 1)
+    setQuant(quant + 1);
   }
 
   function handleRetirar() {
     if (quant <= 1) {
-      return
+      return;
     }
-    setQuant(quant - 1)
+    setQuant(quant - 1);
   }
 
   async function enviarPedido() {
+    const iToken = await AsyncStorage.getItem("@token");
+    const token = JSON.parse(iToken);
     try {
-      const resposta = await apiLocal.post("/CriarPedido", {
-        produtoID: selecionar,
-        mesaID: idMesa,
-        quant: quant
-      })
-      console.log(resposta.data)
-
+      setItensPedido([""]);
+      const mesaID = mesaId;
+      const resposta = await apiLocal.post(
+        "/CriarPedidos",
+        {
+          mesaID,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + `${token}`,
+          },
+        }
+      );
+      setItensPedido(resposta.data);
+      console.log(resposta);
+      if (resposta.data.id) {
+        setVisible(false);
+      }
     } catch (err) {
-      console.log(err)
+      // alert("ta com erro");
     }
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-
         <View>
           <Text style={styles.containerText}>Mesa {route.params.mesaId}</Text>
         </View>
@@ -110,14 +120,9 @@ export default function IdMesas({ navigation, route }) {
             placeholder="Digite o nome do produto..."
             searchPlaceholder="Buscando..."
             notFoundText="Produto não cadastrado..."
-
           />
 
-          <Modal
-            visible={visible}
-            animationType="fade"
-            transparent={true}
-          >
+          <Modal visible={visible} animationType="fade" transparent={true}>
             <SafeAreaView style={styles.modal}>
               <ScrollView>
                 <View>
@@ -144,22 +149,20 @@ export default function IdMesas({ navigation, route }) {
               </ScrollView>
             </SafeAreaView>
           </Modal>
-
         </View>
-
       </ScrollView>
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     marginTop: 30,
     padding: 2,
-    margin: 30
+    margin: 30,
   },
   containerText: {
-    fontSize: 50
+    fontSize: 50,
   },
   modal: {
     flex: 1,
@@ -167,22 +170,22 @@ const styles = StyleSheet.create({
     backgroundColor: "bisque",
     margin: 50,
     padding: 20,
-    borderRadius: 50
+    borderRadius: 50,
   },
   modalText: {
     fontSize: 50,
     marginTop: 10,
-    marginBottom: 25
+    marginBottom: 25,
   },
   modalFechar: {
     fontSize: 30,
-    textAlign: "right"
+    textAlign: "right",
   },
   modalBotoes: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   modalAdd: {
     fontSize: 50,
     marginTop: 300,
-  }
-})
+  },
+});

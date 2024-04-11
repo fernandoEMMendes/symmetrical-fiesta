@@ -38,15 +38,14 @@ export default function Mesas() {
       setRespToken(token);
     }
 
-    async function loadID() {
-      const iID = await AsyncStorage.getItem("@id_atendente");
-      const id = JSON.parse(iID);
+    async function loadId() {
+      const iId = await AsyncStorage.getItem("@id_atendente");
+      const id = JSON.parse(iId);
     }
 
     async function verificaToken() {
       const iToken = await AsyncStorage.getItem("@token");
       const token = JSON.parse(iToken);
-
       const resposta = await apiLocal.get("/ListarMesas", {
         headers: {
           Authorization: "Bearer " + `${token}`,
@@ -67,17 +66,6 @@ export default function Mesas() {
     navigation.navigate("inicial");
   }
 
-  function entrarMesa(id, mesa) {
-
-    console.log("id: ",id, "num_mesa: ",mesa)
-    AsyncStorage.setItem("@idMesa", JSON.stringify(id))
-    AsyncStorage.setItem("@numMesa", JSON.stringify(mesa))
-
-    navigation.navigate("mesa_id", {
-      mesaId: mesa,
-    })
-  }
-
   return (
     <View style={styles.container}>
       <View style={styles.mesaContainer2}>
@@ -87,7 +75,11 @@ export default function Mesas() {
               {lista.length !== 0 && (
                 <>
                   <TouchableOpacity
-                    onPress={() => entrarMesa(lista.id, lista.numero_mesa)}
+                    onPress={() =>
+                      navigation.navigate("mesa_id", {
+                        mesaId: `${lista.numero_mesa}`,
+                      })
+                    }
                   >
                     <Image
                       source={require("../../../images/mesa.png")}
