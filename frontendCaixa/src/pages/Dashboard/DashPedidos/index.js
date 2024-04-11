@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaHome } from "react-icons/fa";
 import Modal from "react-modal";
 import { Link, Route, useNavigate } from "react-router-dom";
 import mesaIcone from "../../../img/mesa.png";
@@ -12,7 +13,6 @@ export default function DashPedidos() {
   const [mesaId, setMesaId] = useState(null);
   const [pedido, setPedido] = useState('')
   const [mesaNumero, setMesaNumero] = useState('');
-
 
 
 
@@ -93,22 +93,44 @@ export default function DashPedidos() {
 
 
   return (
-    <section>
-      <header >
-        <h1 id="romero"> Dashboard Pedidos </h1>
-        <button className="tingas" onClick={Voltar}>Voltar</button>
+    <section id="main_DashPedidos1">
+      
+      <header id="romero" >
+        
+        <h1 id="h1DashPedidos"> Dashboard Pedidos </h1>
 
-
+        <div >
+          <FaHome id="tingas" onClick={Voltar} />
+        </div>
+      
       </header>
+      
+      
       {mesa.map((lista) => {
         return (
           <>
             <br />
+<<<<<<< HEAD
 
+=======
+           
+>>>>>>> 6f5c630498d0ed3f67dccc34a19099a9e31e1e39
             <button className="mesa" onClick={() => abrirModal(lista.id_mesa)}>
               <img src={mesaIcone} alt="icone mesa" />
               <h4>{lista.numero_mesa}</h4>
             </button>
+<<<<<<< HEAD
+=======
+
+            <Modal className="Modalb" isOpen={modalAberto}>
+            
+            
+              <h1>Mesa: {mesaNumero}</h1>
+              <button onClick={fecharModal}>Voltar</button>
+              <button>Fechar mesa</button>
+            </Modal>
+          
+>>>>>>> 6f5c630498d0ed3f67dccc34a19099a9e31e1e39
           </>
         );
       })}
