@@ -45,11 +45,13 @@
 
 .ImgDash{
     height: 50vh;
-    width: 80%;
+    width: 60%;
+    border-radius: 0px;
 }
 .ImgDash:hover{
     height: 55vh;
     cursor: pointer;
+    border-radius: 0px;
 }
 
 
