@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaHome } from "react-icons/fa";
 import Modal from "react-modal";
 import { Link, Route, useNavigate } from "react-router-dom";
 import mesaIcone from "../../../img/mesa.png";
@@ -11,7 +12,6 @@ export default function DashPedidos() {
   const [modalAberto, setModalAberto] = useState(false);
   const [mesaId, setMesaId] = useState(null);
   const [mesaNumero, setMesaNumero] = useState('');
-
 
 
 
@@ -66,21 +66,29 @@ export default function DashPedidos() {
 
 
   return (
-    <section>
-      <header >
-        <h1 id="romero"> Dashboard Pedidos </h1>
-        <button className="tingas" onClick={Voltar}>Voltar</button>
+    <section id="main_DashPedidos1">
+      
+      <header id="romero" >
+        
+        <h1 id="h1DashPedidos"> Dashboard Pedidos </h1>
 
-
+        <div >
+          <FaHome id="tingas" onClick={Voltar} />
+        </div>
+      
       </header>
+      
+      
       {mesa.map((lista) => {
         return (
           <>
             <br />
+           
             <button className="mesa" onClick={() => abrirModal(lista.id_mesa)}>
               <img src={mesaIcone} alt="icone mesa" />
               <h4>{lista.numero_mesa}</h4>
             </button>
+
             <Modal className="Modalb" isOpen={modalAberto}>
             
             
