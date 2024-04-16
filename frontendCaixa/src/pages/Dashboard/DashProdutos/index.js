@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { ImCross } from "react-icons/im";
+import { FaHome } from "react-icons/fa";
 import { DashListarProdutos } from "../DashHome/DashListarProdutos/DashListarProdutos";
 import Modal from "react-modal";
 import apiLocal from "../../../APIs/apiLocal";
@@ -61,7 +62,9 @@ export default function CriarProdutos() {
   return (
     <section>
       <header id="dash_Produtos">
-      <button onClick={Voltar}>Voltar</button>
+      <div id="Icon_Home_Produtos">
+      <FaHome id="FaHome_Icon_Produtos" onClick={Voltar}/>
+      </div>  
         <h1>Dashboard</h1>
         <button onClick={abrirModal}>Adicionar Produto</button>
       </header>

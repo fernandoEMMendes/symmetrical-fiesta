@@ -13,9 +13,19 @@
   width: 80%;
   margin: auto;
 }
-#dash_Produtos>button{
-
+#Icon_Home_Produtos{
+  width: 20%;
+}
+#FaHome_Icon_Produtos{
+  margin-top: 20px;
   
+}
+#FaHome_Icon_Produtos:hover{
+  border: 1px solid white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#dash_Produtos>button{
   width: 20%;
   margin-top: 20px;
   margin-right: 20px;

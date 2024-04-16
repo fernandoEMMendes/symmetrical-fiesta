@@ -105,17 +105,21 @@ export default function DashPedidos() {
 
       </header>
 
-
+      <section id="ListarMesas">
       {mesa.map((lista) => {
         return (
-          <>
+          <div>
             <br />
 
-
-            <button className="mesa" onClick={() => abrirModal(lista.id_mesa)}>
+            <div id="DivMesas">
+            <button id="mesa" onClick={() => abrirModal(lista.id_mesa)}>
               <img src={mesaIcone} alt="icone mesa" />
-              <h4>{lista.numero_mesa}</h4>
+              <div id="Desc_Mesas">
+              <h3 id="AgaTres_Mesas">Mesa</h3>
+              <h4 id="Num_Mesas">{lista.numero_mesa}</h4>
+              </div>
             </button>
+            </div>
 
             <Modal className="Modalb" isOpen={modalAberto}>
 
@@ -125,10 +129,10 @@ export default function DashPedidos() {
               <button>Fechar mesa</button>
             </Modal>
 
-          </>
+          </div>
         );
       })}
-      {pedido.map((item) => {
+      {/* {pedido.map((item) => {
         return (
           <>
             <Modal className="Modalb" isOpen={modalAberto}>
@@ -164,10 +168,11 @@ export default function DashPedidos() {
             </Modal>
           </>
         )
-      })}
+      })} */}
 
 
 
+    </section>
     </section>
   );
 }
