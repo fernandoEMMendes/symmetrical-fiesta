@@ -36,7 +36,7 @@ export default function IdMesas({ navigation, route }) {
   const [itensPedidoInicial, setItensPedidoInicial] = useState([""])
   const [itensPedido, setItensPedido] = useState([""]);
 
-  // console.log(idMesa)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function verificaToken() {
@@ -81,6 +81,8 @@ export default function IdMesas({ navigation, route }) {
       const filtro = resposta.data.filter((palmito) => palmito.mesaID === mesaID)
 
       setItensPedidoInicial(filtro);
+
+      setLoading(false)
 
       if (!resposta.data) {
         navigation.navigate("inicial");
@@ -168,80 +170,123 @@ export default function IdMesas({ navigation, route }) {
   }
 
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View>
-          <Text style={styles.containerText}>Mesa {route.params.mesaId}</Text>
-        </View>
-
-        <View>
-          <SelectList
-            setSelected={(nome) => setSelecionar(nome)}
-            data={produto}
-            save="key"
-            onSelect={() => handleToggleModalAbrir()}
-            label="Produtos"
-            placeholder="Digite o nome do produto..."
-            searchPlaceholder="Buscando..."
-            notFoundText="Produto não cadastrado..."
-          />
-
-          <Modal visible={visible} animationType="fade" transparent={true}>
-            <SafeAreaView style={styles.modal}>
-              <ScrollView>
-                <View>
-                  <TouchableOpacity onPress={handleToggleModalFechar}>
-                    <Text style={styles.modalFechar}>{"❌"}</Text>
-                  </TouchableOpacity>
-
-                  <View>
-                    <Text style={styles.modalText}>{prodNome}</Text>
-                    <Text style={styles.modalSubText}>{prodDesc}</Text>
-                  </View>
-
-                  <View style={styles.modalBotoes}>
-                    <TouchableOpacity onPress={handleRetirar}>
-                      <Text style={styles.modalMenos}>{"➖"}</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.modalText}>{quant}</Text>
-                    <TouchableOpacity onPress={handleAdicionar}>
-                      <Text style={styles.modalMais}>{"➕"}</Text>
-                    </TouchableOpacity>
-                  </View>
-
-                  <View>
-                    <Text style={styles.modalText}>R$: {prodValTotal}</Text>
-                  </View>
-
-                  <View>
-                    <TouchableOpacity onPress={enviarPedido}>
-                      <Text style={[styles.modalAdd, { color: "blue" }]}>Adicionar</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </ScrollView>
-            </SafeAreaView>
-          </Modal>
+  if (loading === true) {
+    return (
+      <SafeAreaView>
+        <ScrollView>
+          <View>
+            <Text>Carregando....</Text>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    )
+  } else {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ScrollView>
 
           <View>
-            {itensPedidoInicial.length !== 0 && (
-              <>
-                {itensPedidoInicial.map((palmito) => {
-                  return (
-                    <View>
-                      <Text style={styles.modalSubText}>{palmito.produto.nome} x{palmito.quant}</Text>
-                    </View>
-                  )
-                })}
-              </>
-            )}
+            <TouchableOpacity onPress={() => navigation.navigate("mesas")}>
+              <Text style={[styles.modalFechar, { textAlign: "left" }]}>{"❌"}</Text>
+            </TouchableOpacity>
           </View>
 
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+          <View style={styles.distancia} />
+
+          <View>
+            <Text style={styles.containerText}>Mesa {route.params.mesaId}</Text>
+          </View>
+
+          <View>
+            <SelectList
+              setSelected={(nome) => setSelecionar(nome)}
+              data={produto}
+              save="key"
+              onSelect={() => handleToggleModalAbrir()}
+              label="Produtos"
+              placeholder="Digite o nome do produto..."
+              searchPlaceholder="Buscando..."
+              notFoundText="Produto não cadastrado..."
+            />
+
+            <Modal visible={visible} animationType="fade" transparent={true}>
+              <SafeAreaView style={styles.modal}>
+                <ScrollView>
+                  <View>
+                    <TouchableOpacity onPress={handleToggleModalFechar}>
+                      <Text style={styles.modalFechar}>{"❌"}</Text>
+                    </TouchableOpacity>
+
+                    <View>
+                      <Text style={styles.modalText}>{prodNome}</Text>
+                      <Text style={styles.modalSubText}>{prodDesc}</Text>
+                    </View>
+
+                    <View style={styles.modalBotoes}>
+                      <TouchableOpacity onPress={handleRetirar}>
+                        <Text style={styles.modalMenos}>{"➖"}</Text>
+                      </TouchableOpacity>
+                      <Text style={styles.modalText}>{quant}</Text>
+                      <TouchableOpacity onPress={handleAdicionar}>
+                        <Text style={styles.modalMais}>{"➕"}</Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    <View>
+                      <Text style={styles.modalText}>R$: {prodValTotal}</Text>
+                    </View>
+
+                    <View>
+                      <TouchableOpacity onPress={enviarPedido}>
+                        <Text style={[styles.modalAdd, { color: "blue" }]}>Adicionar</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </ScrollView>
+              </SafeAreaView>
+            </Modal>
+
+            <View>
+              {itensPedidoInicial.length !== 0 && (
+                <>
+                  {itensPedidoInicial.map((palmito) => {
+                    return (
+                      <View>
+                        <Text style={styles.modalSubText}>{palmito.produto.nome} x{palmito.quant}</Text>
+                      </View>
+                    )
+                  })}
+                </>
+              )}
+            </View>
+
+            {itensPedido.length !== 1 && (
+              <Text style={styles.modalSubText2}>Novos Pedidos</Text>
+            )}
+
+            <View>
+              {itensPedido.length !== 1 && (
+                <>
+                  {itensPedido.map((palmito) => {
+                    return (
+                      <>
+                        {palmito.length !== 0 && (
+                          <View>
+                            <Text style={styles.modalSubText}>{palmito.nome} x{palmito.quant}</Text>
+                          </View>
+                        )}
+                      </>
+                    )
+                  })}
+                </>
+              )}
+            </View>
+
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -273,6 +318,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: "center",
   },
+  modalSubText2: {
+    fontSize: 25,
+    marginTop: 30,
+    marginBottom: 30,
+    textAlign: "center",
+  },
   modalFechar: {
     fontSize: 30,
     textAlign: "right",
@@ -292,5 +343,8 @@ const styles = StyleSheet.create({
   modalAdd: {
     fontSize: 50,
     marginTop: 100,
+  },
+  distancia: {
+    marginTop: 50
   },
 });
