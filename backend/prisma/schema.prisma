@@ -45,7 +45,7 @@ model Pedidos {
   produto   Produtos @relation(fields: [produtoID], references: [id])
   produtoID String
 
-  quant String
+  quant Int
 
   mesa   Mesa   @relation(fields: [mesaID], references: [id_mesa])
   mesaID String

@@ -66,6 +66,16 @@ export default function Mesas() {
     navigation.navigate("inicial");
   }
 
+  function handleNavegar(num_mesa, id_mesa) {
+
+    AsyncStorage.removeItem("@idMesa")
+    AsyncStorage.setItem("@idMesa", id_mesa)
+
+    navigation.navigate("mesa_id", {
+      mesaId: `${num_mesa}`,
+    })
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.mesaContainer2}>
@@ -75,10 +85,8 @@ export default function Mesas() {
               {lista.length !== 0 && (
                 <>
                   <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate("mesa_id", {
-                        mesaId: `${lista.numero_mesa}`,
-                      })
+                    onPress={
+                      () => handleNavegar(lista.numero_mesa, lista.id_mesa)
                     }
                   >
                     <Image

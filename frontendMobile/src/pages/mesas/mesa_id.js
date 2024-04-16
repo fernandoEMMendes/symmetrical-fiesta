@@ -20,16 +20,23 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 console.disableYellowBox = true;
 
 export default function IdMesas({ navigation, route }) {
-  const [produto, setProduto] = useState([""]);
-  const [selecionar, setSelecionar] = useState("");
   const [visible, setVisible] = useState(false);
-  const [itensPedido, setItensPedido] = useState([""]);
-  const [mesaId, setMesaId] = useState("");
 
-  const idMesa = AsyncStorage.getItem("@idMesa");
-  // console.log(idMesa)
+  const [produto, setProduto] = useState([""]);
+  const [prodConsulta, setProdConsulta] = useState([""])
 
+  const [prodNome, setProdNome] = useState("")
+  const [prodDesc, setProdDesc] = useState("")
+  const [prodPreco, setProdPreco] = useState(1)
+  const [prodValTotal, setProdValTotal] = useState(1)
   const [quant, setQuant] = useState(1);
+
+  const [selecionar, setSelecionar] = useState("");
+  const idMesa = AsyncStorage.getItem("@idMesa");
+  const [itensPedidoInicial, setItensPedidoInicial] = useState([""])
+  const [itensPedido, setItensPedido] = useState([""]);
+
+  // console.log(idMesa)
 
   useEffect(() => {
     async function verificaToken() {
@@ -41,6 +48,8 @@ export default function IdMesas({ navigation, route }) {
           Authorization: "Bearer " + `${token}`,
         },
       });
+
+      setProdConsulta(resposta.data)
 
       let newArray = resposta.data.map((palmito) => {
         return { key: palmito.id, value: palmito.nome };
@@ -56,13 +65,56 @@ export default function IdMesas({ navigation, route }) {
     verificaToken();
   }, []);
 
+  useEffect(() => {
+    async function verificaToken() {
+      const iToken = await AsyncStorage.getItem("@token");
+      const token = JSON.parse(iToken);
+
+      const resposta = await apiLocal.get("/ListarPedido", {
+        headers: {
+          Authorization: "Bearer " + `${token}`,
+        },
+      });
+
+      const mesaID = String(idMesa._j);
+
+      const filtro = resposta.data.filter((palmito) => palmito.mesaID === mesaID)
+
+      setItensPedidoInicial(filtro);
+
+      if (!resposta.data) {
+        navigation.navigate("inicial");
+        return;
+      }
+    }
+    verificaToken()
+  }, [])
+
+  useEffect(() => {
+    async function RecuperarDados() {
+      const consultado = prodConsulta.filter((palmito) => palmito.id === selecionar)
+      setProdNome(consultado[0].nome)
+      setProdDesc(consultado[0].descricao)
+      setProdPreco(consultado[0].preco)
+      setProdValTotal(consultado[0].preco)
+      setQuant(1)
+    }
+    RecuperarDados()
+  }, [selecionar])
+
+  useEffect(() => {
+    async function calcularPreco() {
+      setProdValTotal(prodPreco * quant)
+    }
+    calcularPreco()
+  }, [quant])
+
   function handleToggleModalAbrir() {
     setVisible(true);
   }
 
   function handleToggleModalFechar() {
     setVisible(false);
-    // FAZER RESETAR MODAL
   }
 
   function handleAdicionar() {
@@ -79,13 +131,16 @@ export default function IdMesas({ navigation, route }) {
   async function enviarPedido() {
     const iToken = await AsyncStorage.getItem("@token");
     const token = JSON.parse(iToken);
+
     try {
-      setItensPedido([""]);
-      const mesaID = mesaId;
+      const mesaID = String(idMesa._j);
+
       const resposta = await apiLocal.post(
-        "/CriarPedidos",
+        "/CriarPedido",
         {
-          mesaID,
+          produtoID: selecionar,
+          mesaID: mesaID,
+          quant: quant
         },
         {
           headers: {
@@ -93,15 +148,25 @@ export default function IdMesas({ navigation, route }) {
           },
         }
       );
-      setItensPedido(resposta.data);
-      console.log(resposta);
-      if (resposta.data.id) {
-        setVisible(false);
+
+      let precoTotal = resposta.data.quant * resposta.data.produto.preco
+
+      let array = {
+        id: resposta.data.produto.id,
+        nome: resposta.data.produto.nome,
+        quant: resposta.data.quant,
+        preco: precoTotal
       }
+
+      setItensPedido(oldArray => [...oldArray, array]);
+
+      setVisible(false);
+
     } catch (err) {
-      // alert("ta com erro");
+      alert(err.response.data.error);
     }
   }
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -130,25 +195,49 @@ export default function IdMesas({ navigation, route }) {
                     <Text style={styles.modalFechar}>{"❌"}</Text>
                   </TouchableOpacity>
 
+                  <View>
+                    <Text style={styles.modalText}>{prodNome}</Text>
+                    <Text style={styles.modalSubText}>{prodDesc}</Text>
+                  </View>
+
                   <View style={styles.modalBotoes}>
                     <TouchableOpacity onPress={handleRetirar}>
-                      <Text style={styles.modalText}>{"➖"}</Text>
+                      <Text style={styles.modalMenos}>{"➖"}</Text>
                     </TouchableOpacity>
                     <Text style={styles.modalText}>{quant}</Text>
                     <TouchableOpacity onPress={handleAdicionar}>
-                      <Text style={styles.modalText}>{"➕"}</Text>
+                      <Text style={styles.modalMais}>{"➕"}</Text>
                     </TouchableOpacity>
                   </View>
 
                   <View>
+                    <Text style={styles.modalText}>R$: {prodValTotal}</Text>
+                  </View>
+
+                  <View>
                     <TouchableOpacity onPress={enviarPedido}>
-                      <Text style={styles.modalAdd}>Adicionar</Text>
+                      <Text style={[styles.modalAdd, { color: "blue" }]}>Adicionar</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
               </ScrollView>
             </SafeAreaView>
           </Modal>
+
+          <View>
+            {itensPedidoInicial.length !== 0 && (
+              <>
+                {itensPedidoInicial.map((palmito) => {
+                  return (
+                    <View>
+                      <Text style={styles.modalSubText}>{palmito.produto.nome} x{palmito.quant}</Text>
+                    </View>
+                  )
+                })}
+              </>
+            )}
+          </View>
+
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -176,6 +265,13 @@ const styles = StyleSheet.create({
     fontSize: 50,
     marginTop: 10,
     marginBottom: 25,
+    textAlign: "center",
+  },
+  modalSubText: {
+    fontSize: 25,
+    marginTop: 5,
+    marginBottom: 10,
+    textAlign: "center",
   },
   modalFechar: {
     fontSize: 30,
@@ -183,9 +279,18 @@ const styles = StyleSheet.create({
   },
   modalBotoes: {
     flexDirection: "row",
+    alignSelf: "center",
+  },
+  modalMais: {
+    fontSize: 50,
+    paddingLeft: 30
+  },
+  modalMenos: {
+    fontSize: 50,
+    paddingRight: 30
   },
   modalAdd: {
     fontSize: 50,
-    marginTop: 300,
+    marginTop: 100,
   },
 });
