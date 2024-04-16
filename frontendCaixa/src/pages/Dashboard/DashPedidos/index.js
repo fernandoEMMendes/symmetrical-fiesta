@@ -94,84 +94,78 @@ export default function DashPedidos() {
 
   return (
     <section id="main_DashPedidos1">
-      
+
       <header id="romero" >
-        
+
         <h1 id="h1DashPedidos"> Dashboard Pedidos </h1>
 
         <div >
           <FaHome id="tingas" onClick={Voltar} />
         </div>
-      
+
       </header>
-      
-      
+
+
       {mesa.map((lista) => {
         return (
           <>
             <br />
-<<<<<<< HEAD
 
-=======
-           
->>>>>>> 6f5c630498d0ed3f67dccc34a19099a9e31e1e39
+
             <button className="mesa" onClick={() => abrirModal(lista.id_mesa)}>
               <img src={mesaIcone} alt="icone mesa" />
               <h4>{lista.numero_mesa}</h4>
             </button>
-<<<<<<< HEAD
-=======
 
             <Modal className="Modalb" isOpen={modalAberto}>
-            
-            
+
+
               <h1>Mesa: {mesaNumero}</h1>
               <button onClick={fecharModal}>Voltar</button>
               <button>Fechar mesa</button>
             </Modal>
-          
->>>>>>> 6f5c630498d0ed3f67dccc34a19099a9e31e1e39
+
           </>
         );
       })}
       {pedido.map((item) => {
         return (
           <>
-<Modal className="Modalb" isOpen={modalAberto}>
-        <h1>Mesa: {mesaNumero}</h1>
-        <section>
-          <table>
-            <tr>
-              <th>Produto</th>
-              <th>Valor Unitario</th>
-              <th>QTDE</th>
-              <th>Subtotal</th>
-            </tr>
-            <tr>
-              <td></td>
-              <td>5</td>
-              <td>{item.quant}</td>
-              <td>5</td>
-            </tr>
-          </table>
-        </section>
-        <section className="secaovltotal">
-          <table>
-            <tr>
-              <th>Valor Total</th>
-            </tr>
-            <tr>
-              <td>45</td>
-            </tr>
-          </table>
-        </section>
-        <button onClick={fecharModal}>Voltar</button>
-        <button>Fechar mesa</button>
-      </Modal>
+            <Modal className="Modalb" isOpen={modalAberto}>
+              <h1>Mesa: {mesaNumero}</h1>
+              <section>
+                <table>
+                  <tr>
+                    <th>Produto</th>
+                    <th>Valor Unitario</th>
+                    <th>QTDE</th>
+                    <th>Subtotal</th>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>5</td>
+                    <td>{item.quant}</td>
+                    <td>5</td>
+                  </tr>
+                </table>
+              </section>
+              <section className="secaovltotal">
+                <table>
+                  <tr>
+                    <th>Valor Total</th>
+                  </tr>
+                  <tr>
+                    <td>45</td>
+                  </tr>
+                </table>
+              </section>
+              <button onClick={fecharModal}>Voltar</button>
+              <button>Fechar mesa</button>
+            </Modal>
           </>
         )
       })}
-      
+
 
 
     </section>
