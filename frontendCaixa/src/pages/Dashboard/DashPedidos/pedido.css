@@ -93,4 +93,19 @@
     margin-left: 10px;
     font-size: 2rem;
 }
-
+#tabelaProdutos{
+    color: blue;
+    height: 45px;
+    
+   } 
+#tabelaProdutosContainer{
+    border: black 2px solid;
+    padding: 8px;
+    }
+    #secaoTabela{
+        justify-content: center;
+        text-align: center;
+        display: flex;
+        margin-top: 5px;
+        
+    }

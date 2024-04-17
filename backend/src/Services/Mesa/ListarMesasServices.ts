@@ -7,7 +7,8 @@ class ListarMesaServices {
                 numero_mesa: "asc"
             }
         })
-        return (mesas)
+
+        return mesas
     }
 }
 
