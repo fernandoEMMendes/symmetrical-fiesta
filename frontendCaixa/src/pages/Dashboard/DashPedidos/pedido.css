@@ -1,9 +1,19 @@
 
-#main_dashPedidos1{
+
+
+::-webkit-scrollbar{
+    width:0;
+}
+
+
+
+
+
+#main_dashPedidos1 {
     max-width: 1400px;
 }
 
-#romero{
+#romero {
     padding-top: 20px;
     padding-bottom: 20px;
     width: 100%;
@@ -15,26 +25,27 @@
     justify-content: right;
 }
 
-#h1DashPedidos{
+#h1DashPedidos {
     text-align: center;
     width: 97%;
     margin-left: 20px;
 }
-#tingas{
+
+#tingas {
     width: 50px;
     height: 50px;
     margin-right: 30px;
     margin-top: 20px;
 }
-#tingas:hover{
+
+#tingas:hover {
     border: 1px solid white;
     border-radius: 8px;
     background-color: #f81919c1;
     cursor: pointer;
 }
 
-.Modalb{
-   
+.Modalb {
     width: 50%;
     height: 50%;
     margin: auto;
@@ -43,9 +54,11 @@
     text-align: center;
     padding-top: 20px;
     border-radius: 6px;
+    border: 2px solid black;
+    overflow-x: auto;
 }
 
-.vento{
+.vento {
     height: 150px;
     width: 30%;
     margin: auto;
@@ -54,58 +67,99 @@
     padding-left: 60px;
 }
 
-.secaovltotal{
+.secaovltotal {
     display: none;
 }
 
-#ListarMesas{
+#ListarMesas {
     width: 100%;
     margin: auto;
     justify-content: center;
-  display: grid;
-  grid-template-columns: 180px 180px 180px 180px 180px;
-  /* grid-template-rows: 100px; */
-  grid-auto-rows: 110px ;
+    display: grid;
+    grid-template-columns: 180px 180px 180px 180px 180px;
+    /* grid-template-rows: 100px; */
+    grid-auto-rows: 110px;
 }
-#DivMesas{
+
+#DivMesas {
     margin-left: 20px;
     margin-right: 20px;
 }
-#mesa{  
+
+#mesa {
     width: 100%;
 }
-#mesa:hover{
+
+#mesa:hover {
     background-color: rgba(0, 0, 0, 0.918);
     border: 3px solid white;
     color: white;
     cursor: pointer;
 }
-#Desc_Mesas{
+
+#Desc_Mesas {
     display: flex;
     justify-content: center;
 }
-#AgaTres_Mesas{
+
+#AgaTres_Mesas {
     color: #f81919;
-   
+
     font-size: 1.5rem;
 }
-#Num_Mesas{
+
+#Num_Mesas {
     margin-left: 10px;
     font-size: 2rem;
 }
-#tabelaProdutos{
-    color: blue;
-    height: 45px;
+#tabelaProdutosContainer {
+    width: 100%;
     
-   } 
-#tabelaProdutosContainer{
-    border: black 2px solid;
-    padding: 8px;
-    }
-    #secaoTabela{
-        justify-content: center;
-        text-align: center;
-        display: flex;
-        margin-top: 5px;
-        
-    }
+}
+#FecharMesasModal{
+    background-Color: white;
+    width: 100%;
+    margin-top: -25px;
+    font-size: 2rem;
+    padding: 10px 0px;
+    border-radius: 8px 8px 0px 0px;
+    border: transparent;
+    border-top: 2px solid black;
+   
+}
+#FecharMesasModal:hover{
+    background-Color: grey;
+    color: white;
+    width: 100%;
+    margin-top: -25px;
+    font-size: 2rem;
+    padding: 10px 0px;
+    border-radius: 8px 8px 0px 0px;
+    border: transparent;
+    cursor: pointer;
+}
+#MesasH1{
+    margin-top: 10px;
+    color: white;
+    font-size: 2.5rem;
+
+}
+#tableHeader{
+    text-align: center;
+    font-size: 3rem;
+    color: white;
+    margin-left: 10px;
+    margin-right: 20px;
+    
+}
+
+#tableDick {
+    border: 1px solid;
+    text-align: center;
+    font-size: 30px;
+    
+}
+.TableDickTD p{
+    margin-top: 5px;
+    
+}

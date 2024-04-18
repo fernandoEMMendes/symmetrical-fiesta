@@ -67,6 +67,7 @@ export default function DashPedidos() {
 
     const produtos = pedido.filter((palmito) => palmito.mesaID === id)
     setMesaProds(produtos)
+    console.log(mesaProds)
 
     setModalAberto(true);
   }
@@ -123,44 +124,40 @@ export default function DashPedidos() {
         {mesaProds.map((item) => {
           return (
             <>
-              <Modal className="Modalb" isOpen={modalAberto}>
-                {item.length === 0 ? (
-                  <h2>Carregando. . .</h2>
-                ) : (
-                  <>
+              <Modal className="Modalb" isOpen={modalAberto} onRequestClose={()=>setModalAberto(false)}>
+                {/* <button onClick={fecharModal} style={{ backgroundColor: "white", float: "left" }}>{"❌"}</button> */}
+                <button id="FecharMesasModal">Fechar mesa</button>
 
-                    <button onClick={fecharModal} style={{ backgroundColor: "white", float: "left" }}>{"❌"}</button>
-                    <button style={{ backgroundColor: "white", float: "right" }}>Fechar mesa</button>
+                <h1 id="MesasH1">Mesa: {mesaNumero}</h1>
 
-                    <h1>Mesa: {mesaNumero}</h1>
-                    <section id="secaoTabela">
-                      <table id='tabelaProdutosContainer'>
-                        <tr id='tabelaProdutos'>
-                          <th>Produto</th>
-                          <th>Valor Unitario</th>
-                          <th>QTDE</th>
-                          <th>Subtotal</th>
-                        </tr>
-                        <tr>
-                          <td>{item.produto.nome}</td>
-                          <td>{item.produto.preco}</td>
-                          <td>{item.quant}</td>
-                          <td>{item.produto.preco * item.quant}</td>
-                        </tr>
-                      </table>
-                    </section>
-                    <section className="secaovltotal">
-                      <table>
-                        <tr>
-                          <th>Valor Total</th>
-                        </tr>
-                        <tr>
-                          <td>45</td>
-                        </tr>
-                      </table>
-                    </section>
-                  </>
-                )}
+                <table id="tabelaProdutosContainer">
+
+                  <tr id="tableHeader">
+                    <th>NOME</th>
+                    <th>PREÇO</th>
+                    <th>QUANT</th>
+                    <th>TOTAL</th>
+                  </tr>
+
+                  {mesaProds.map((palmito) => {
+                    return (
+                      <>
+                        {palmito.length === 0 ? (
+                          <h2>Carregando. . .</h2>
+                        ) : (
+                          <tr id="tableDick">
+                            <td className="TableDickTD"><p>{palmito.produto.nome}</p></td>
+                            <td className="TableDickTD"><p>R$ {palmito.produto.preco}</p></td>
+                            <td className="TableDickTD"><p>{palmito.quant}</p></td>
+                            <td className="TableDickTD"><p>R$ {palmito.produto.preco * palmito.quant}</p></td>
+                          </tr>
+                        )}
+                      </>
+                    )
+                  })}
+
+                </table>
+
               </Modal>
             </>
           )

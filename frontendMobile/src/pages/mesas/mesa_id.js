@@ -34,7 +34,6 @@ export default function IdMesas({ navigation, route }) {
   const [selecionar, setSelecionar] = useState("");
   const idMesa = AsyncStorage.getItem("@idMesa");
   const [itensPedidoInicial, setItensPedidoInicial] = useState([""])
-  const [itensPedido, setItensPedido] = useState([""]);
 
   const [loading, setLoading] = useState(true)
 
@@ -90,7 +89,7 @@ export default function IdMesas({ navigation, route }) {
       }
     }
     verificaToken()
-  }, [])
+  }, [itensPedidoInicial])
 
   useEffect(() => {
     async function RecuperarDados() {
@@ -150,20 +149,8 @@ export default function IdMesas({ navigation, route }) {
           },
         }
       );
-
-      let precoTotal = resposta.data.quant * resposta.data.produto.preco
-
-      let array = {
-        id: resposta.data.produto.id,
-        nome: resposta.data.produto.nome,
-        quant: resposta.data.quant,
-        preco: precoTotal
-      }
-
-      setItensPedido(oldArray => [...oldArray, array]);
-
+      
       setVisible(false);
-
     } catch (err) {
       alert(err.response.data.error);
     }
@@ -259,29 +246,6 @@ export default function IdMesas({ navigation, route }) {
                 </>
               )}
             </View>
-
-            {itensPedido.length !== 1 && (
-              <Text style={styles.modalSubText2}>Novos Pedidos</Text>
-            )}
-
-            <View>
-              {itensPedido.length !== 1 && (
-                <>
-                  {itensPedido.map((palmito) => {
-                    return (
-                      <>
-                        {palmito.length !== 0 && (
-                          <View>
-                            <Text style={styles.modalSubText}>{palmito.nome} x{palmito.quant}</Text>
-                          </View>
-                        )}
-                      </>
-                    )
-                  })}
-                </>
-              )}
-            </View>
-
           </View>
         </ScrollView>
       </SafeAreaView>

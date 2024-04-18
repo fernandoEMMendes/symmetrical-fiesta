@@ -12,15 +12,40 @@ export class criarPedidoService {
             throw new Error("Campos obrigátorios em branco!")
         }
 
-        const resposta = await prismaClient.pedidos.create({
-            data: {
-                produtoID: produtoID,
+        console.log(produtoID, mesaID, quant)
+
+        const verificarProd = await prismaClient.pedidos.findFirst({
+            where: {
                 mesaID: mesaID,
-                quant: quant
-            }, include: {
-                produto: true
+                produtoID: produtoID
             }
         })
-        return resposta
+
+        if (!verificarProd) {
+            const resposta = await prismaClient.pedidos.create({
+                data: {
+                    produtoID: produtoID,
+                    mesaID: mesaID,
+                    quant: quant
+                }, include: {
+                    produto: true
+                }
+            })
+            return resposta
+        }
+        if (verificarProd) {
+
+            const novaQuant = quant + verificarProd.quant
+
+            const resposta = await prismaClient.pedidos.updateMany({
+                where: {
+                    mesaID: verificarProd.mesaID,
+                    produtoID: verificarProd.produtoID
+                }, data: {
+                    quant: novaQuant
+                }
+            })
+            return resposta
+        }
     }
 }

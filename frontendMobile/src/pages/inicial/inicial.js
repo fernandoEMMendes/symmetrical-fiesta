@@ -24,6 +24,7 @@ export default function Inicial() {
       alert("Existem campos em branco!");
       return;
     }
+
     try {
       const resposta = await apiLocal.post("/LoginAtendentes", {
         nome,
