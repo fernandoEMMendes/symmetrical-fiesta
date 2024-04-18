@@ -53,7 +53,7 @@ rotas.get("/ListarPedidoUnico/:id_pedido", isAuth, new ListarPedidoUnicoControll
 
 //Usuários
 rotas.post("/CriarUsuario", new criarUsuarioController().handle)
-rotas.get("/ListarUnicoUsuario", new listarUnicoUsuarioController().handle)
+rotas.get("/ListarUnicoUsuario",isAuth, new listarUnicoUsuarioController().handle)
 rotas.post("/LoginUsuario", new loginUsuarioController().handle)
 rotas.delete("/FecharMesa", new fecharPedidoController().handle)
 

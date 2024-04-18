@@ -23,7 +23,7 @@ export default function Home() {
         async function verificarLSToken() {
             const resposta = await apiLocal.get("/ListarUnicoUsuario",{
                 headers:{
-                    Authorization: 'Bearer ' + `${token}`
+                    Authorization: `Bearer ${token}`
                 }
             })
             if (resposta.data.dados) {
