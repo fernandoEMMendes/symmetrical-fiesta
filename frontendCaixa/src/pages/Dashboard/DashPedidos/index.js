@@ -79,7 +79,8 @@ export default function DashPedidos() {
         mesaId
       })
       setModalAberto(false)
-
+      navegacao.navigate("/Dashboard")
+    
     } catch (err) {
       console.log(err)
     }
