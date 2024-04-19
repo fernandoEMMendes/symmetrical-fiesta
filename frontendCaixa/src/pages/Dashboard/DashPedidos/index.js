@@ -14,6 +14,7 @@ export default function DashPedidos() {
   const [pedido, setPedido] = useState('')
   const [mesaNumero, setMesaNumero] = useState('');
   const [mesaProds, setMesaProds] = useState([""])
+  const [mesaId, setMesaId] = useState("")
 
   useEffect(() => {
     async function verificaToken() {
@@ -33,7 +34,7 @@ export default function DashPedidos() {
       }
     }
     verificaToken();
-  }, []);
+  }, [pedido]);
 
 
   useEffect(() => {
@@ -67,19 +68,21 @@ export default function DashPedidos() {
 
     const produtos = pedido.filter((palmito) => palmito.mesaID === id)
     setMesaProds(produtos)
-    console.log(mesaProds)
+    setMesaId(id)
 
     setModalAberto(true);
   }
 
+  async function fecharPedido() {
+    try {
+      await apiLocal.delete("/FecharMesa", {
+        mesaId
+      })
+      setModalAberto(false)
 
-
-  function fecharModal() {
-    setModalAberto(false);
-  }
-
-  function fazerpedido() {
-
+    } catch (err) {
+      console.log(err)
+    }
   }
 
 
@@ -124,9 +127,8 @@ export default function DashPedidos() {
         {mesaProds.map((item) => {
           return (
             <>
-              <Modal className="Modalb" isOpen={modalAberto} onRequestClose={()=>setModalAberto(false)}>
-                {/* <button onClick={fecharModal} style={{ backgroundColor: "white", float: "left" }}>{"❌"}</button> */}
-                <button id="FecharMesasModal">Fechar mesa</button>
+              <Modal className="Modalb" isOpen={modalAberto} onRequestClose={() => setModalAberto(false)}>
+                <button id="FecharMesasModal" onClick={() => fecharPedido()}>Fechar mesa</button>
 
                 <h1 id="MesasH1">Mesa: {mesaNumero}</h1>
 

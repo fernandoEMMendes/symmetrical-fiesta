@@ -34,7 +34,7 @@ import { CriarMesasController } from "./Controllers/Mesa/CriarMesasController";
 import { ListarMesasController } from "./Controllers/Mesa/ListarMesasController";
 import { ListarMesaUnicaController } from "./Controllers/Mesa/ListarMesaUnicaController";
 import { fecharPedidoController } from "./Controllers/Pedidos/fecharPedidoController";
-
+import { FecharMesaController } from "./Controllers/Mesa/FecharMesaController";
 
 //----------------------------------------------------------------------------------------//
 
@@ -50,12 +50,13 @@ rotas.put("/AtualizarProduto", isAuth, new atualizarProdutoController().handle)
 rotas.post("/CriarPedido", new criarPedidoController().handle)
 rotas.get("/ListarPedido", isAuth, new listarPedidoController().handle)
 rotas.get("/ListarPedidoUnico/:id_pedido", isAuth, new ListarPedidoUnicoController().handle)
+rotas.delete("/FecharMesa", new FecharMesaController().handle)
 
 //Usuários
 rotas.post("/CriarUsuario", new criarUsuarioController().handle)
-rotas.get("/ListarUnicoUsuario",isAuth, new listarUnicoUsuarioController().handle)
+rotas.get("/ListarUnicoUsuario", isAuth, new listarUnicoUsuarioController().handle)
 rotas.post("/LoginUsuario", new loginUsuarioController().handle)
-rotas.delete("/FecharMesa", new fecharPedidoController().handle)
+rotas.delete("/FecharMesa", new FecharMesaController().handle)
 
 //ATENDENTES
 rotas.post("/CriarAtendentes", new CriarAtendentesController().handle);
